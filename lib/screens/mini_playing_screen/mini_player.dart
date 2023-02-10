@@ -77,12 +77,14 @@ class _MiniPlayerState extends State<MiniPlayer> {
                                 bool? playingStage = snapshot.data;
                                 if (playingStage != null && playingStage) {
                                   return TextScroll(
+                                    
                                     GetAllSongController
                                         .playingSong[GetAllSongController
                                             .audioPlayer.currentIndex!]
                                         .displayNameWOExt,
                                     textAlign: TextAlign.center,
-                                    style: title
+                                    style: title,
+                                    velocity:const Velocity(pixelsPerSecond:Offset(40,0)),
                                   );
                                 } else {
                                   return Text(

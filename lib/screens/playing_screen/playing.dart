@@ -150,6 +150,7 @@ class _NowPlayingState extends State<NowPlaying> {
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.center,
                                   mode: TextScrollMode.endless,
+                                  velocity:const Velocity(pixelsPerSecond:Offset(40,0)),
                                 ),
                               ),
                             ),

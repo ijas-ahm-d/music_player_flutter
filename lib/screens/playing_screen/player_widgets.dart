@@ -35,15 +35,15 @@ class _PlayingControlsState extends State<PlayingControls> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
 //
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    isDark = !isDark;
-                  });
-                },
-                icon: isDark
-                    ? const Icon(Icons.light_mode_outlined)
-                    : const Icon(Icons.nights_stay_outlined)),
+            // IconButton(
+            //     onPressed: () {
+            //       setState(() {
+            //         isDark = !isDark;
+            //       });
+            //     },
+            //     icon: isDark
+            //         ? const Icon(Icons.light_mode_outlined)
+            //         : const Icon(Icons.nights_stay_outlined)),
 // shuffle
             IconButton(
               onPressed: () {

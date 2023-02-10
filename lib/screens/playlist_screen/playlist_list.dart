@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart%20';
 import 'package:music_app/controllers/get_all_song_controller.dart';
@@ -13,9 +15,14 @@ import 'package:provider/provider.dart';
 
 class SinglePlaylist extends StatefulWidget {
   const SinglePlaylist(
-      {super.key, required this.playlist, required this.findex});
+      {super.key,
+      required this.playlist,
+      required this.findex, required this.backgroundImage,
+     
+      });
   final MusicaModel playlist;
   final int findex;
+  final String backgroundImage;
   @override
   State<SinglePlaylist> createState() => _PlaylistListState();
 }
@@ -23,10 +30,12 @@ class SinglePlaylist extends StatefulWidget {
 class _PlaylistListState extends State<SinglePlaylist> {
   @override
   Widget build(BuildContext context) {
+    int imageChanger = 1;
     late List<SongModel> songPlaylist;
     return ValueListenableBuilder(
       valueListenable: Hive.box<MusicaModel>('playlistDb').listenable(),
       builder: (BuildContext context, Box<MusicaModel> music, Widget? child) {
+        imageChanger = Random().nextInt(5) + 1;
         songPlaylist =
             listPlaylist(music.values.toList()[widget.findex].songId);
         return Scaffold(
@@ -57,10 +66,12 @@ class _PlaylistListState extends State<SinglePlaylist> {
                     widget.playlist.name,
                     style: const TextStyle(color: Colors.purple),
                   ),
-                  background: Image.asset(
-                    'assets/images/dp.jpg',
-                    fit: BoxFit.cover,
-                  ),
+                  background: Image.asset(widget.backgroundImage,fit: BoxFit.cover,),
+                  // background:widget.backgroundImage,
+                  // background: Image.asset(
+                  //   'assets/images/dp.jpg',
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
                 pinned: true,
                 expandedHeight: MediaQuery.of(context).size.width,
