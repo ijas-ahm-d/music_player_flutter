@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:lottie/lottie.dart';
 import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:music_app/screens/playlist_screen/playlist_db.dart';
@@ -27,30 +28,45 @@ class _PlaylistPageState extends State<PlaylistPage> {
       valueListenable: Hive.box<MusicaModel>('playlistDb').listenable(),
       builder: (context, Box<MusicaModel> musicList, child) {
         return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: const Text('Playlist'),
-          ),
-          floatingActionButton: FloatingActionButton(
-            tooltip: "Add new playlist",
-            onPressed: () {
-              nameController.clear();
-              newplaylist(context, _formKey);
-            },
-            backgroundColor: Colors.black54,
-            child: const Icon(
-              Icons.playlist_add,
-              color: Colors.white,
-            ),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  nameController.clear();
+                  newplaylist(context, _formKey);
+                },
+                icon: const Icon(Icons.playlist_add),
+              ),
+              const SizedBox(width: 20)
+            ],
           ),
           body: SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: Hive.box<MusicaModel>('playlistDb').isEmpty
-                ?  Center(
-                    child: Text('No playlist',style: title,),
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            nameController.clear();
+                            newplaylist(context, _formKey);
+                          },
+                          child: Lottie.asset(
+                            'assets/lottie/addPlaylist.json',
+                            width: 200,
+                          ),
+                        ),
+                        Text(
+                          'Add playlist',
+                          style: title,
+                        ),
+                      ],
+                    ),
                   )
                 : PlaylistGridView(
                     musicList: musicList,
@@ -161,23 +177,35 @@ Future<void> saveButtonPressed(context) async {
   if (name.isEmpty) {
     return;
   } else if (datas.contains(music.name)) {
-    const snackbar3 = SnackBar(
-        duration: Duration(milliseconds: 750),
+    final snackbar3 = SnackBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        width: MediaQuery.of(context).size.width * 3.5 / 5,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(milliseconds: 750),
         backgroundColor: Colors.black,
-        content: Text(
+        content: const Text(
           'playlist already exist',
-          style: TextStyle(color: Colors.redAccent),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white),
         ));
     ScaffoldMessenger.of(context).showSnackBar(snackbar3);
     Navigator.of(context).pop();
   } else {
     PlaylistDb.addPlaylist(music);
-    const snackbar4 = SnackBar(
-        duration: Duration(milliseconds: 750),
+    final snackbar4 = SnackBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        width: MediaQuery.of(context).size.width * 3.5 / 5,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(milliseconds: 750),
         backgroundColor: Colors.black,
-        content: Text(
+        content: const Text(
           'playlist created successfully',
-          style: TextStyle(color: Colors.greenAccent),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white),
         ));
     ScaffoldMessenger.of(context).showSnackBar(snackbar4);
     Navigator.pop(context);

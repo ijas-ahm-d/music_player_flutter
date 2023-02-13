@@ -10,17 +10,9 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:music_app/screens/favorite_screen/favorite_db.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-TextStyle title = TextStyle(
-    color:
-        // isDark ? Colors.white :
-        Colors.black,
-    fontWeight: FontWeight.bold,
-    fontSize: 16);
-TextStyle artistStyle = TextStyle(
-    color:
-        // isDark?Colors.white38 :
-        Colors.black38,
-    fontSize: 14);
+TextStyle title = const TextStyle(
+    color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16);
+TextStyle artistStyle = const TextStyle(color: Colors.black38, fontSize: 14);
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,8 +26,6 @@ List<SongModel> startSong = [];
 class _HomePageState extends State<HomePage> {
   final OnAudioQuery audioQuery = OnAudioQuery();
   final AudioPlayer audioPlayer = AudioPlayer();
-  // bool isFavorite = false;
-  // bool isFav = false;
   List<SongModel> allSongs = [];
 
   @override

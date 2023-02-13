@@ -75,6 +75,7 @@ class _NowPlayingState extends State<NowPlaying> {
                         childIcon: IconButton(
                           onPressed: () {
                             Navigator.pop(context);
+                            isDark = false;
                           },
                           icon: const Icon(Icons.arrow_back),
                         ),
@@ -83,6 +84,7 @@ class _NowPlayingState extends State<NowPlaying> {
 // title
                     const Text('N O W  P L A Y I N G'),
 // Favorite
+
                     SizedBox(
                       height: 60,
                       width: 60,
@@ -150,7 +152,8 @@ class _NowPlayingState extends State<NowPlaying> {
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.center,
                                   mode: TextScrollMode.endless,
-                                  velocity:const Velocity(pixelsPerSecond:Offset(40,0)),
+                                  velocity: const Velocity(
+                                      pixelsPerSecond: Offset(40, 0)),
                                 ),
                               ),
                             ),
@@ -238,12 +241,15 @@ class _NowPlayingState extends State<NowPlaying> {
 
   playSong() {
     GetAllSongController.audioPlayer.play();
+
     GetAllSongController.audioPlayer.durationStream.listen(
       (d) {
         if (mounted) {
           setState(
             () {
-              _duration = d!;
+              if (d != null) {
+                _duration = d;
+              }
             },
           );
         }

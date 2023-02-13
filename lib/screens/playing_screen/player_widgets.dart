@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
-import 'package:music_app/screens/playing_screen/playing.dart';
 import 'package:music_app/screens/playing_screen/playlist_icon.dart';
 import 'package:music_app/theme/button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -34,16 +33,6 @@ class _PlayingControlsState extends State<PlayingControls> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-//
-            // IconButton(
-            //     onPressed: () {
-            //       setState(() {
-            //         isDark = !isDark;
-            //       });
-            //     },
-            //     icon: isDark
-            //         ? const Icon(Icons.light_mode_outlined)
-            //         : const Icon(Icons.nights_stay_outlined)),
 // shuffle
             IconButton(
               onPressed: () {
@@ -68,7 +57,6 @@ class _PlayingControlsState extends State<PlayingControls> {
                   } else {
                     return const Icon(
                       Icons.shuffle_rounded,
-                      // color: Colors.black,
                     );
                   }
                 },
@@ -116,7 +104,6 @@ class _PlayingControlsState extends State<PlayingControls> {
               children: [
                 Expanded(
                   child: SpecialButton(
-                    //  colour: Colors.grey[300],
                     childIcon:
 // Previous songs
                         widget.firstsong
@@ -139,7 +126,6 @@ class _PlayingControlsState extends State<PlayingControls> {
                                 },
                                 icon: const Icon(
                                   Icons.skip_previous,
-                                  // color: Colors.black,
                                 ),
                               ),
                   ),
@@ -147,7 +133,6 @@ class _PlayingControlsState extends State<PlayingControls> {
                 Expanded(
                   flex: 2,
                   child: SpecialButton(
-                    //  colour: Colors.grey[300],
                     childIcon:
 // play pause
                         IconButton(
@@ -168,14 +153,12 @@ class _PlayingControlsState extends State<PlayingControls> {
                       icon: isPlaying
                           ? const Icon(Icons.pause)
                           : const Icon(Icons.play_arrow),
-                      // color: Colors.black,
                       iconSize: 30,
                     ),
                   ),
                 ),
                 Expanded(
                   child: SpecialButton(
-                    //  colour: Colors.grey[300],
                     childIcon:
 // skip to next
                         widget.lastsong
@@ -198,7 +181,6 @@ class _PlayingControlsState extends State<PlayingControls> {
                                 },
                                 icon: const Icon(
                                   Icons.skip_next,
-                                  // color: Colors.black,
                                 ),
                               ),
                   ),

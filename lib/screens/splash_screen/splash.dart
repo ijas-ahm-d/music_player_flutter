@@ -31,22 +31,20 @@ class _SplashPageState extends State<SplashPage> {
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        // decoration: const BoxDecoration(
-        //     image: DecorationImage(
-        //         image: AssetImage('assets/images/splashCover.jpg'),
-        //         fit: BoxFit.cover),),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(35.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 30),
-                  child: Image.asset('assets/images/Logo.jpg',color: Colors.purple[400],),
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: Image.asset(
+                    'assets/images/Logo.jpg',
+                    color: Colors.purple[400],
+                  ),
                 ),
-                 Text(
+                Text(
                   'MuSiCa',
                   style: TextStyle(
                       fontWeight: FontWeight.w900,
@@ -54,36 +52,10 @@ class _SplashPageState extends State<SplashPage> {
                       color: Colors.purple[400],
                       letterSpacing: 10),
                 ),
-
-
-             const Text('Let the Musica Speak!'),
-             const   SizedBox(height: 50,),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 10, bottom: 15),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: const [
-                //       Text(
-                //         "WHEN WORD'S FAIL,",
-                //         style: TextStyle(
-                //             color: Colors.black,
-                //             letterSpacing: 10,
-                //             fontSize: 10),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: const [
-                //     Text(
-                //       'MUSIC SPEAKS',
-                //       style: TextStyle(
-                //           color: Colors.black, letterSpacing: 10, fontSize: 10),
-                //     ),
-                    
-                //   ],
-                // ),
+                const Text('Let the Musica Speak!'),
+                const SizedBox(
+                  height: 50,
+                ),
                 Lottie.asset('assets/lottie/splashlottie.json'),
               ],
             ),

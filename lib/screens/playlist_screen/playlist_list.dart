@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart%20';
+import 'package:lottie/lottie.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/controllers/get_recent_song_controller.dart';
 import 'package:music_app/database/musica_db.dart';
@@ -13,75 +12,105 @@ import 'package:music_app/theme/button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 
-class SinglePlaylist extends StatefulWidget {
-  const SinglePlaylist(
-      {super.key,
-      required this.playlist,
-      required this.findex, required this.backgroundImage,
-     
-      });
+class SinglePlaylist extends StatelessWidget {
+  const SinglePlaylist({
+    super.key,
+    required this.playlist,
+    required this.findex,
+  });
   final MusicaModel playlist;
   final int findex;
-  final String backgroundImage;
-  @override
-  State<SinglePlaylist> createState() => _PlaylistListState();
-}
 
-class _PlaylistListState extends State<SinglePlaylist> {
   @override
   Widget build(BuildContext context) {
-    int imageChanger = 1;
     late List<SongModel> songPlaylist;
     return ValueListenableBuilder(
       valueListenable: Hive.box<MusicaModel>('playlistDb').listenable(),
       builder: (BuildContext context, Box<MusicaModel> music, Widget? child) {
-        imageChanger = Random().nextInt(5) + 1;
-        songPlaylist =
-            listPlaylist(music.values.toList()[widget.findex].songId);
+        songPlaylist = listPlaylist(music.values.toList()[findex].songId);
         return Scaffold(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          floatingActionButton: FloatingActionButton(
-            tooltip: "Add songs",
-            backgroundColor: Colors.black54,
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PlaylistAddSong(
-                    playlist: widget.playlist,
-                  ),
-                ),
-              );
-            },
-          ),
           body: CustomScrollView(
             slivers: [
               SliverAppBar(
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Text(
-                    widget.playlist.name,
-                    style: const TextStyle(color: Colors.purple),
+//pop button
+                leading: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 32,
                   ),
-                  background: Image.asset(widget.backgroundImage,fit: BoxFit.cover,),
-                  // background:widget.backgroundImage,
-                  // background: Image.asset(
-                  //   'assets/images/dp.jpg',
-                  //   fit: BoxFit.cover,
-                  // ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
+                actions: [
+// Add song
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PlaylistAddSong(
+                            playlist: playlist,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 32,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  )
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+//Title
+                  title: Text(
+                    playlist.name,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  expandedTitleScale: 2.9,
+                  background: Image.asset(
+                    'assets/images/playlist/playlistCoverPic.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                backgroundColor: Colors.purple.shade200,
                 pinned: true,
-                expandedHeight: MediaQuery.of(context).size.width,
+                expandedHeight: MediaQuery.of(context).size.width * 2.5 / 4,
               ),
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
                     songPlaylist.isEmpty
-                        ? const Center(
-                            child: Text('Add some songs'),
+                        ? Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PlaylistAddSong(
+                                          playlist: playlist,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Lottie.asset(
+                                    'assets/lottie/addPlaylist.json',
+                                    width: 200,
+                                  ),
+                                ),
+                                const Center(child: Text('Add some songs')),
+                              ],
+                            ),
                           )
                         : ListView.builder(
                             shrinkWrap: true,
@@ -91,7 +120,6 @@ class _PlaylistListState extends State<SinglePlaylist> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 2, horizontal: 10),
                                 child: SpecialButton(
-                                  // colour: Colors.grey[300],
                                   childIcon: ListTile(
                                     leading: QueryArtworkWidget(
                                       id: songPlaylist[index].id,
@@ -127,7 +155,6 @@ class _PlaylistListState extends State<SinglePlaylist> {
                                       width: 60,
                                       height: 60,
                                       child: SpecialButton(
-                                        // colour: Colors.grey[300],
                                         childIcon: IconButton(
                                           icon: Icon(
                                             Icons.remove,
@@ -136,7 +163,7 @@ class _PlaylistListState extends State<SinglePlaylist> {
                                           ),
                                           onPressed: () {
                                             songDeleteFromPlaylist(
-                                                songPlaylist[index]);
+                                                songPlaylist[index], context);
                                           },
                                         ),
                                       ),
@@ -172,7 +199,6 @@ class _PlaylistListState extends State<SinglePlaylist> {
                   ],
                 ),
               )
-              // Image.asset('images/dp.jpg')
             ],
           ),
         );
@@ -180,14 +206,21 @@ class _PlaylistListState extends State<SinglePlaylist> {
     );
   }
 
-  void songDeleteFromPlaylist(SongModel data) {
-    widget.playlist.deleteData(data.id);
-    const removePlaylist = SnackBar(
-        backgroundColor: Colors.black,
-        content: Text(
-          'Song deleted from Playlist',
-          style: TextStyle(color: Colors.redAccent),
-        ));
+  void songDeleteFromPlaylist(SongModel data, context) {
+    playlist.deleteData(data.id);
+    final removePlaylist = SnackBar(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      width: MediaQuery.of(context).size.width * 3.5 / 5,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.black,
+      content: const Text(
+        'Song removed from Playlist',
+        style: TextStyle(color: Colors.white),
+      ),
+      duration: const Duration(milliseconds: 550),
+    );
     ScaffoldMessenger.of(context).showSnackBar(removePlaylist);
   }
 

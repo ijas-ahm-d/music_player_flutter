@@ -10,7 +10,7 @@ Future moredialogplaylist(
       contentPadding: const EdgeInsets.only(top: 10, bottom: 8),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15))),
-      backgroundColor:Colors.white,
+      backgroundColor: Colors.white,
       children: [
         SimpleDialogOption(
           onPressed: () {
@@ -74,14 +74,11 @@ Future<dynamic> showdialog(context, musicList, index) {
         title: const Text(
           'Delete Playlist',
           style: TextStyle(
-              color: Colors.black,
-              fontSize: 17,
-              fontWeight: FontWeight.w600),
+              color: Colors.black, fontSize: 17, fontWeight: FontWeight.w600),
         ),
         content: const Text(
           'Are you sure you want to delete this playlist?',
           style: TextStyle(
-            fontFamily: 'UbuntuCondensed',
             color: Colors.black,
             fontSize: 15,
           ),
@@ -103,13 +100,19 @@ Future<dynamic> showdialog(context, musicList, index) {
             onPressed: () {
               musicList.deleteAt(index);
               Navigator.pop(context);
-              const snackBar = SnackBar(
-                backgroundColor: Colors.black,
-                content: Text(
-                  'Playlist is deleted',
-                  style: TextStyle(color: Colors.redAccent),
+              final snackBar = SnackBar(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
                 ),
-                duration: Duration(milliseconds: 350),
+                width: MediaQuery.of(context).size.width * 3.5 / 5,
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.black,
+                content: const Text(
+                  'Playlist is deleted',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white),
+                ),
+                duration: const Duration(milliseconds: 450),
               );
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
@@ -132,16 +135,18 @@ Future editplaylist(index, context, formkey, playlistnamectrl) {
     context: context,
     builder: (ctx) => SimpleDialog(
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15),),),
-      backgroundColor:Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      backgroundColor: Colors.white,
       children: [
         const SimpleDialogOption(
           child: Text(
             'Edit Playlist Name',
+            textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.w600),
+                color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
           ),
         ),
         const SizedBox(
@@ -157,8 +162,9 @@ Future editplaylist(index, context, formkey, playlistnamectrl) {
                   fillColor: const Color.fromARGB(90, 158, 158, 158),
                   filled: true,
                   border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(25),),
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
                   contentPadding: const EdgeInsets.only(left: 15, top: 5)),
               style: const TextStyle(
                   color: Colors.black,

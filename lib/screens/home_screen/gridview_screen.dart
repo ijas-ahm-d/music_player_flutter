@@ -39,6 +39,7 @@ class _GridViewScreenState extends State<GridViewScreen> {
         return Padding(
           padding: const EdgeInsets.all(4.0),
           child: InkWell(
+// ontap
             onTap: () {
               GetAllSongController.audioPlayer.setAudioSource(
                   GetAllSongController.createSongList(widget.songModel),
@@ -100,7 +101,7 @@ class _GridViewScreenState extends State<GridViewScreen> {
                         ),
                       ),
                     ),
-
+// artist
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Row(

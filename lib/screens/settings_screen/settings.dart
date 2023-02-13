@@ -12,11 +12,13 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: AppBar(
-          title: const Text('Settings'),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
+      appBar: AppBar(
+        title: const Text('Settings'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
             children: [
               ListTile(
                 leading: const Icon(Icons.info),
@@ -31,7 +33,7 @@ class SettingsPage extends StatelessWidget {
                         const Text(
                           'Welcome to Musica App, \n\n"when words fail, Musica speaks".\nWe are dedicated to providing you the very best quality of sound and the music varient, with an emphasis on new features. Playlist and Favorites and a rich user experience \n\nFounded in 2023 by Ijas Ahammed. Musica App is our first major project with a basis perfomance of music hub and creates a better version in future. Musica gives you the best music experience that you never had. It includes attractive mode of UI\'s and good practices.\n\nIt gives good quality and had increased the settings to power up the sysytem as well as to provide better music rythms. \n \n We hope enjoy our music as much as we enjoy offering them to you. If you have any questions or comments, please don\'t hesitate to contact us. \n\nSincierely, \n\nIjas Ahammed ,',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                         ),
                         Align(
@@ -50,7 +52,7 @@ class SettingsPage extends StatelessWidget {
                   );
                 },
               ),
-               ListTile(
+              ListTile(
                 leading: const Icon(Icons.restart_alt_sharp),
                 title: const Text('RESET APP'),
                 onTap: () {
@@ -62,14 +64,15 @@ class SettingsPage extends StatelessWidget {
                         title: const Text(
                           'Reset App',
                           style: TextStyle(
-                            color: Colors.red,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         content: const Text(
-                            """Are you sure do you want to reset the App?
-        Your saved data will be deleted.
-                        """),
+                          """Are you sure do you want to reset the App?
+Your saved data will be deleted.
+                          """,
+                          style: TextStyle(fontSize: 15),
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -82,7 +85,12 @@ class SettingsPage extends StatelessWidget {
                               PlaylistDb.resetAPP(context);
                               GetAllSongController.audioPlayer.stop();
                             },
-                            child: const Text('Yes'),
+                            child: const Text(
+                              'Yes',
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
+                            ),
                           ),
                         ],
                       );
@@ -119,9 +127,14 @@ class SettingsPage extends StatelessWidget {
                       ));
                 },
               ),
-             
             ],
           ),
-        ));
+          const Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Text('Version 1.0'),
+          )
+        ],
+      ),
+    );
   }
 }

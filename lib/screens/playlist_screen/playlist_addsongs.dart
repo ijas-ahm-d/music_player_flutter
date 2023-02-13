@@ -46,7 +46,6 @@ class _PlaylistAddSongState extends State<PlaylistAddSong> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
                 child: SpecialButton(
-                  // colour: Colors.grey[300],
                   childIcon: ListTile(
                     leading: QueryArtworkWidget(
                       id: item.data![index].id,
@@ -58,7 +57,6 @@ class _PlaylistAddSongState extends State<PlaylistAddSong> {
                       nullArtworkWidget: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6),
-                          // color: Colors.white.withOpacity(0.3)
                           color: Colors.purple.withOpacity(0.3),
                         ),
                         height: 50,
@@ -80,7 +78,6 @@ class _PlaylistAddSongState extends State<PlaylistAddSong> {
                       height: 60,
                       width: 60,
                       child: SpecialButton(
-                        // colour: Colors.grey[300],
                         childIcon: !widget.playlist
                                 .isValueIn(item.data![index].id)
                             ? IconButton(
@@ -128,24 +125,38 @@ class _PlaylistAddSongState extends State<PlaylistAddSong> {
 
   void songAddToPlaylist(SongModel data) {
     widget.playlist.add(data.id);
-    const addedToPlaylist = SnackBar(
-      backgroundColor: Colors.black,
-      content: Text(
-        'Song added to playlist',
-        style: TextStyle(color: Colors.greenAccent),
+    final addedToPlaylist = SnackBar(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
       ),
+      width: MediaQuery.of(context).size.width * 3.5 / 5,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.black,
+      content: const Text(
+        'Song added to playlist',
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.white),
+      ),
+      duration: const Duration(milliseconds: 550),
     );
     ScaffoldMessenger.of(context).showSnackBar(addedToPlaylist);
   }
 
   void songDeleteFromPlaylist(SongModel data) {
     widget.playlist.deleteData(data.id);
-    const removePlaylist = SnackBar(
-      backgroundColor: Colors.black,
-      content: Text(
-        'Song removed from Playlist',
-        style: TextStyle(color: Colors.redAccent),
+    final removePlaylist = SnackBar(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
       ),
+      width: MediaQuery.of(context).size.width * 3.5 / 5,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.black,
+      content: const Text(
+        'Song removed from Playlist',
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.white),
+      ),
+      duration: const Duration(milliseconds: 550),
     );
     ScaffoldMessenger.of(context).showSnackBar(removePlaylist);
   }

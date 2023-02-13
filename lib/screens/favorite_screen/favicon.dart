@@ -3,7 +3,7 @@ import 'package:music_app/screens/favorite_screen/favorite_db.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class FavIcon extends StatefulWidget {
-  const FavIcon({super.key,required this.songModel});
+  const FavIcon({super.key, required this.songModel});
   final SongModel songModel;
   @override
   State<FavIcon> createState() => _FavIconState();
@@ -17,33 +17,51 @@ class _FavIconState extends State<FavIcon> {
       builder: (context, List<SongModel> favoriteData, child) {
         return IconButton(
           onPressed: () {
+// if the song is in fav list
             if (FavoriteDb.isFavor(widget.songModel)) {
+// remove from the fav
               FavoriteDb.delete(widget.songModel.id);
-              const remove = SnackBar(
-                content: Text(
-                  'Song removed from favorites',
-                  style: TextStyle(
-                      color: Colors.redAccent, fontWeight: FontWeight.w500),
+//fav removed snackbar
+              final remove = SnackBar(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
                 ),
-                duration: Duration(seconds: 1),
+                width: MediaQuery.of(context).size.width * 3.5 / 5,
+                behavior: SnackBarBehavior.floating,
+                content: const Text(
+                  'Song removed from favorites',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w500),
+                ),
+                duration: const Duration(milliseconds: 850),
                 backgroundColor: Colors.black,
               );
               ScaffoldMessenger.of(context).showSnackBar(remove);
             } else {
+// add to fav song
               FavoriteDb.add(widget.songModel);
-              const add = SnackBar(
-                backgroundColor: Colors.black,
-                content: Text(
-                  'Song added to favorites',
-                  style: TextStyle(
-                      color: Colors.greenAccent, fontWeight: FontWeight.w500),
+// add to fav snackbar
+              final add = SnackBar(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
                 ),
-                duration: Duration(seconds: 1),
+                width: MediaQuery.of(context).size.width * 3.5 / 5,
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.black,
+                content: const Text(
+                  'Song added to favorites',
+                   textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w500),
+                ),
+                duration: const Duration(milliseconds: 850),
               );
               ScaffoldMessenger.of(context).showSnackBar(add);
             }
             FavoriteDb.favoriteSongs.notifyListeners();
           },
+// icon
           icon: FavoriteDb.isFavor(widget.songModel)
               ? const Icon(
                   Icons.favorite,

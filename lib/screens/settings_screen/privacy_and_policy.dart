@@ -6,16 +6,18 @@ class PrivacyPolicyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Privacy Policy'),
+        title: const Text(
+          'Privacy Policy',
+          style: TextStyle(fontSize: 17),
+        ),
       ),
       body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-        children:const [
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: const [
             Text("""
 Privacy Policy for Musica player
 
@@ -158,9 +160,9 @@ If you have any questions about this Privacy Policy, You can contact us:
 By email: ijasahammed2000@gmail.com
 
 """)
-        ],
-      ),
-          )),
+          ],
+        ),
+      )),
     );
   }
 }

@@ -9,7 +9,7 @@ class TermsAndConditionPage extends StatelessWidget {
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       appBar: AppBar(
-        title: const Text('Terms of use'),
+        title: const Text('Terms of use',style: TextStyle(fontSize: 16),),
         
       ),
       body: SingleChildScrollView(

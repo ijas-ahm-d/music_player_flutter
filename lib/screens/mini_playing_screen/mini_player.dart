@@ -21,13 +21,17 @@ bool isPlaying = false;
 class _MiniPlayerState extends State<MiniPlayer> {
   @override
   void initState() {
-    GetAllSongController.audioPlayer.currentIndexStream.listen((index) {
-      if (index != null && mounted) {
-        setState(() {
-          index == 0 ? firstSong = true : firstSong = false;
-        });
-      }
-    });
+    GetAllSongController.audioPlayer.currentIndexStream.listen(
+      (index) {
+        if (index != null && mounted) {
+          setState(
+            () {
+              index == 0 ? firstSong = true : firstSong = false;
+            },
+          );
+        }
+      },
+    );
 
     super.initState();
   }
@@ -48,20 +52,15 @@ class _MiniPlayerState extends State<MiniPlayer> {
       child: Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
-          padding: const EdgeInsets.only(left:8.0,right: 8,bottom:0 ),
+          padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 0),
           child: SizedBox(
-            // decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(10),
-            //     // border: Border.all(color: Colors.purple,width: 3),
-            //   //  color:  Colors.black,
-            //     ),
             height: 80,
             width: MediaQuery.of(context).size.width,
-
             child: SpecialButton(
-               border: Border.all(color: Colors.purple,width: 3),
-              childIcon: Stack(children: [
-                Row(
+              border: Border.all(color: Colors.purple, width: 3),
+              childIcon: Stack(
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
@@ -77,14 +76,14 @@ class _MiniPlayerState extends State<MiniPlayer> {
                                 bool? playingStage = snapshot.data;
                                 if (playingStage != null && playingStage) {
                                   return TextScroll(
-                                    
                                     GetAllSongController
                                         .playingSong[GetAllSongController
                                             .audioPlayer.currentIndex!]
                                         .displayNameWOExt,
                                     textAlign: TextAlign.center,
                                     style: title,
-                                    velocity:const Velocity(pixelsPerSecond:Offset(40,0)),
+                                    velocity: const Velocity(
+                                        pixelsPerSecond: Offset(40, 0)),
                                   );
                                 } else {
                                   return Text(
@@ -124,6 +123,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
                           ],
                         ),
                       ),
+// recent
                       firstSong
                           ? IconButton(
                               iconSize: 32,
@@ -153,9 +153,10 @@ class _MiniPlayerState extends State<MiniPlayer> {
                               icon: const Icon(Icons.skip_previous),
                               color: Colors.purple.withOpacity(0.7),
                             ),
+// play and Pause
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
+                            backgroundColor: Colors.white.withOpacity(0.8),
                             shape: const CircleBorder()),
                         onPressed: () async {
                           setState(() {
@@ -177,19 +178,20 @@ class _MiniPlayerState extends State<MiniPlayer> {
                             if (playingStage != null && playingStage) {
                               return Icon(
                                 Icons.pause_circle,
-                                color: Colors.purple.withOpacity(0.3),
+                                color: Colors.purple.withOpacity(0.7),
                                 size: 35,
                               );
                             } else {
                               return Icon(
                                 Icons.play_circle,
-                                color: Colors.purple.withOpacity(0.3),
+                                color: Colors.purple.withOpacity(0.7),
                                 size: 35,
                               );
                             }
                           },
                         ),
                       ),
+// next
                       IconButton(
                         iconSize: 35,
                         onPressed: () async {
@@ -211,8 +213,10 @@ class _MiniPlayerState extends State<MiniPlayer> {
                         ),
                         color: Colors.purple.withOpacity(0.7),
                       )
-                    ])
-              ]),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

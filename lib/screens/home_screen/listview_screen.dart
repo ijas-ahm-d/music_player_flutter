@@ -33,8 +33,8 @@ class _ListViewScreenState extends State<ListViewScreen> {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
           child: SpecialButton(
-            //  colour: Colors.grey[300],
             childIcon: ListTile(
+// image
               leading: QueryArtworkWidget(
                 id: widget.songModel[index].id,
                 type: ArtworkType.AUDIO,
@@ -45,14 +45,12 @@ class _ListViewScreenState extends State<ListViewScreen> {
                 nullArtworkWidget: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    // color: Colors.white.withOpacity(0.3)
                     color: Colors.purple.withOpacity(0.3),
                   ),
                   height: 50,
                   width: 50,
                   child: Icon(
                     Icons.music_note,
-                    // color: Colors.white,
                     color: Colors.purple.withOpacity(0.5),
                   ),
                 ),

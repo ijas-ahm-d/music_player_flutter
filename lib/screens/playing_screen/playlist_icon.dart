@@ -24,8 +24,6 @@ class _PlaylistIconState extends State<PlaylistIcon> {
     return IconButton(
       onPressed: () {
         showPlaylistBottomSheet(context);
-
-        // showPlaylistdialog(context);
       },
       icon: const Icon(
         Icons.playlist_add,
@@ -54,6 +52,7 @@ class _PlaylistIconState extends State<PlaylistIcon> {
                       Hive.box<MusicaModel>('playlistDb').listenable(),
                   builder: (BuildContext context, Box<MusicaModel> musicList,
                       child) {
+// if playlist is empty
                     return Hive.box<MusicaModel>('playlistDb').isEmpty
                         ? const Center(
                             child: SizedBox(
@@ -76,7 +75,6 @@ class _PlaylistIconState extends State<PlaylistIcon> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 2, horizontal: 10),
                                 child: SpecialButton(
-                                  //  colour: Colors.grey[300],
                                   childIcon: ListTile(
                                     leading: Icon(
                                       Icons.queue_music,
@@ -113,21 +111,35 @@ class _PlaylistIconState extends State<PlaylistIcon> {
     if (!datas.isValueIn(data.id)) {
       datas.add(data.id);
       final addedToPlaylist = SnackBar(
-          duration: const Duration(milliseconds: 850),
-          backgroundColor: Colors.black,
-          content: Text(
-            'Song added to $name',
-            style: const TextStyle(color: Colors.greenAccent),
-          ));
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        width: MediaQuery.of(context).size.width * 3.5 / 5,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(milliseconds: 850),
+        backgroundColor: Colors.black,
+        content: Text(
+          'Song added to $name',
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Colors.white),
+        ),
+      );
       ScaffoldMessenger.of(context).showSnackBar(addedToPlaylist);
     } else {
       final alreadyInPlaylist = SnackBar(
-          duration: const Duration(milliseconds: 850),
-          backgroundColor: Colors.black,
-          content: Text(
-            'Song already added in $name',
-            style: const TextStyle(color: Colors.redAccent),
-          ));
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        width: MediaQuery.of(context).size.width * 3.5 / 5,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(milliseconds: 850),
+        backgroundColor: Colors.white,
+        content: Text(
+          'Song already added in $name',
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Colors.redAccent),
+        ),
+      );
       ScaffoldMessenger.of(context).showSnackBar(alreadyInPlaylist);
     }
   }
@@ -235,22 +247,30 @@ class _PlaylistIconState extends State<PlaylistIcon> {
     } else if (datas.contains(music.name)) {
       const snackbar3 = SnackBar(
           duration: Duration(milliseconds: 750),
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.white,
           content: Text(
             'playlist already exist',
+            textAlign: TextAlign.center,
             style: TextStyle(color: Colors.redAccent),
           ));
       ScaffoldMessenger.of(context).showSnackBar(snackbar3);
       Navigator.of(context).pop();
     } else {
       PlaylistDb.addPlaylist(music);
-      const snackbar4 = SnackBar(
-          duration: Duration(milliseconds: 750),
-          backgroundColor: Colors.black,
-          content: Text(
-            'playlist created successfully',
-            style: TextStyle(color: Colors.white),
-          ));
+      final snackbar4 = SnackBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        width: MediaQuery.of(context).size.width * 3.5 / 5,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(milliseconds: 750),
+        backgroundColor: Colors.black,
+        content: const Text(
+          'playlist created successfully',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white),
+        ),
+      );
       ScaffoldMessenger.of(context).showSnackBar(snackbar4);
       Navigator.pop(context);
       nameController.clear();

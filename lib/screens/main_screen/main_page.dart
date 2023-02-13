@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/screens/mini_playing_screen/mini_player.dart';
-import 'package:music_app/screens/playing_screen/playing.dart';
 import 'package:music_app/screens/recent_screen/recent.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:music_app/screens/favorite_screen/favorite.dart';
@@ -33,19 +32,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //           onPressed: () {
-      //             setState(() {
-      //               isDark = !isDark;
-      //             });
-      //           },
-      //           icon: isDark
-      //               ? const Icon(Icons.light_mode_outlined)
-      //               : const Icon(Icons.nights_stay_outlined)),
-        
-        
-      //   title: Text('ghg')),
+
       body: ValueListenableBuilder(
         valueListenable: FavoriteDb.favoriteSongs,
         builder: (context, List<SongModel> music, child) {

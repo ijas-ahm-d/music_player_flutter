@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:just_audio/just_audio.dart';
+import 'package:lottie/lottie.dart';
 import 'package:music_app/screens/home_screen/listview_screen.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -45,7 +45,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   borderSide: BorderSide.none)),
         ),
       ),
-      body: ListViewScreen(songModel: foundSongs),
+      body: foundSongs.isEmpty
+          ? Center(child: Lottie.asset('assets/lottie/noResult.json'))
+          : ListViewScreen(songModel: foundSongs),
     );
   }
 
