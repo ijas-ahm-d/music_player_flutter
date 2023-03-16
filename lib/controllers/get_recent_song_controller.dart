@@ -3,33 +3,37 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class GetRecentSongController extends ChangeNotifier{
-  static ValueNotifier<List<SongModel>> recentSongNotifier = ValueNotifier([]);
+class GetRecentSongController with ChangeNotifier {
+  // static final recentDb = Hive.openBox('recentSongNotifier');
+  final List<SongModel> _recentSongNotifier = [];
+  List<SongModel> get recentSongNotifier => _recentSongNotifier;
+
   static List<dynamic> recentlyPlayed = [];
 
-  static Future<void> addRecentlyPlayed(item) async {
+  Future<void> addRecentlyPlayed(item) async {
     final recentDb = await Hive.openBox('recentSongNotifier');
     await recentDb.add(item);
     getRecentSongs();
-    recentSongNotifier.notifyListeners();
+    notifyListeners();
   }
 
-  static Future<void> getRecentSongs() async {
+  Future<void> getRecentSongs() async {
     final recentDb = await Hive.openBox('recentSongNotifier');
     recentlyPlayed = recentDb.values.toList();
     displayRecents();
-    recentSongNotifier.notifyListeners();
+    notifyListeners();
   }
 
-  static Future<void> displayRecents() async {
+  Future<void> displayRecents() async {
     final recentDb = await Hive.openBox('recentSongNotifier');
     final recentSongItems = recentDb.values.toList();
-    recentSongNotifier.value.clear();
+    _recentSongNotifier.clear();
+    // recentSongNotifier.clear();
     recentlyPlayed.clear();
     for (int i = 0; i < recentSongItems.length; i++) {
       for (int j = 0; j < startSong.length; j++) {
         if (recentSongItems[i] == startSong[j].id) {
-          recentSongNotifier.value.add(startSong[j]);
+          _recentSongNotifier.add(startSong[j]);
           recentlyPlayed.add(startSong[j]);
         }
       }

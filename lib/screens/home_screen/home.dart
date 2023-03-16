@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
       await audioQuery.permissionsRequest();
     }
     setState(() {});
-
     Permission.storage.request();
   }
 

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:music_app/database/musica_db.dart';
+// import 'package:music_app/database/musica_db.dart';
+import 'package:music_app/screens/playlist_screen/playlist.dart';
 import 'package:music_app/screens/playlist_screen/playlist_db.dart';
+import 'package:provider/provider.dart';
+
+import '../../model/musica_db.dart';
 
 Future moredialogplaylist(
     context, index, musicList, formkey, playlistnamectrl) {
@@ -200,7 +204,9 @@ Future editplaylist(index, context, formkey, playlistnamectrl) {
             ),
             SimpleDialogOption(
               onPressed: () {
-                updateplaylistname(index, formkey, playlistnamectrl);
+                
+                updateplaylistname(index, formkey, playlistnamectrl, context);
+
                 Navigator.of(context).pop();
               },
               child: const Text(
@@ -218,14 +224,28 @@ Future editplaylist(index, context, formkey, playlistnamectrl) {
   );
 }
 
-void updateplaylistname(index, formkey, playlistnamectrl) {
+void updateplaylistname(index, formkey, playlistnamectrl, context) {
   if (formkey.currentState!.validate()) {
     final names = playlistnamectrl.text.trim();
     if (names.isEmpty) {
       return;
     } else {
-      final playlistnam = MusicaModel(name: names, songId: []);
-      PlaylistDb.editPlaylist(index, playlistnam);
+      final playlistname = MusicaModel(name: names, songId: []);
+      // final datas =
+      //     PlaylistDb.playlistDb.values.map((e) => e.name.trim()).toList();
+
+      // if (datas.contains(playlistname.name)) {
+      //   snackBarShow(context, "playlist already exist");
+      //   Navigator.pop(context);
+      
+      // }
+//       Consumer<PlaylistDb>(
+//         builder: (context, value, child) {
+//  final playlistname = MusicaModel(name: names, songId: []);
+//           return value.editPlaylist(index, playlistname);
+//         },
+      // );
+      PlaylistDb.editPlaylist(index, playlistname);
     }
   }
 }

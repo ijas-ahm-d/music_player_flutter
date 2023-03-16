@@ -136,11 +136,11 @@ class _MiniPlayerState extends State<MiniPlayer> {
                           : IconButton(
                               iconSize: 32,
                               onPressed: () async {
-                                GetRecentSongController.addRecentlyPlayed(
-                                    GetAllSongController
-                                        .playingSong[GetAllSongController
-                                            .audioPlayer.currentIndex!]
-                                        .id);
+                                // GetRecentSongController.addRecentlyPlayed(
+                                //     GetAllSongController
+                                //         .playingSong[GetAllSongController
+                                //             .audioPlayer.currentIndex!]
+                                //         .id);
                                 if (GetAllSongController
                                     .audioPlayer.hasPrevious) {
                                   await GetAllSongController.audioPlayer
@@ -195,11 +195,11 @@ class _MiniPlayerState extends State<MiniPlayer> {
                       IconButton(
                         iconSize: 35,
                         onPressed: () async {
-                          GetRecentSongController.addRecentlyPlayed(
-                              GetAllSongController
-                                  .playingSong[GetAllSongController
-                                      .audioPlayer.currentIndex!]
-                                  .id);
+                          // GetRecentSongController.addRecentlyPlayed(
+                          //     GetAllSongController
+                          //         .playingSong[GetAllSongController
+                          //             .audioPlayer.currentIndex!]
+                          //         .id);
                           if (GetAllSongController.audioPlayer.hasNext) {
                             await GetAllSongController.audioPlayer.seekToNext();
                             await GetAllSongController.audioPlayer.play();

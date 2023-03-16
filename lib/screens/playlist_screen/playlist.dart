@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
-import 'package:music_app/database/musica_db.dart';
+// import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:music_app/screens/playlist_screen/playlist_db.dart';
 import 'package:music_app/screens/playlist_screen/playlist_gridview.dart';
+
+import '../../model/musica_db.dart';
 
 class PlaylistPage extends StatefulWidget {
   const PlaylistPage({super.key});
@@ -194,21 +196,42 @@ Future<void> saveButtonPressed(context) async {
     Navigator.of(context).pop();
   } else {
     PlaylistDb.addPlaylist(music);
-    final snackbar4 = SnackBar(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25),
-        ),
-        width: MediaQuery.of(context).size.width * 3.5 / 5,
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(milliseconds: 750),
-        backgroundColor: Colors.black,
-        content: const Text(
-          'playlist created successfully',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white),
-        ));
-    ScaffoldMessenger.of(context).showSnackBar(snackbar4);
+    snackBarShow(context, "'playlist created successfully',");
+    // final snackbar4 = SnackBar(
+    //     shape: RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.circular(25),
+    //     ),
+    //     width: MediaQuery.of(context).size.width * 3.5 / 5,
+    //     behavior: SnackBarBehavior.floating,
+    //     duration: const Duration(milliseconds: 750),
+    //     backgroundColor: Colors.black,
+    //     content: const Text(
+    //       'playlist created successfully',
+    //       textAlign: TextAlign.center,
+    //       style: TextStyle(color: Colors.white),
+    //     ));
+    // ScaffoldMessenger.of(context).showSnackBar(snackbar4);
     Navigator.pop(context);
     nameController.clear();
   }
+}
+
+void snackBarShow(context, message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      width: MediaQuery.of(context).size.width * 3.5 / 5,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.black,
+      margin: const EdgeInsets.all(10),
+      duration: const Duration(milliseconds: 750),
+      content: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: const TextStyle(color: Colors.white),
+      ),
+    ),
+  );
 }

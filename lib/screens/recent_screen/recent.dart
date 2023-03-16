@@ -6,6 +6,7 @@ import 'package:music_app/screens/home_screen/home.dart';
 import 'package:music_app/screens/home_screen/listview_screen.dart';
 import 'package:music_app/screens/main_screen/main_page.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:provider/provider.dart';
 
 class RecentPage extends StatefulWidget {
   const RecentPage({super.key});
@@ -18,30 +19,33 @@ class _RecentPageState extends State<RecentPage> {
   final OnAudioQuery _audioQuery = OnAudioQuery();
   static List<SongModel> recentSong = [];
 
-  @override
-  void initState() {
-    init();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   init();
+  //   super.initState();
+  // }
 
-  Future init() async {
-    await GetRecentSongController.getRecentSongs();
-  }
+  // Future init() async {
+  //   await GetRecentSongController.getRecentSongs();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GetRecentSongController>(context, listen: false)
+          .getRecentSongs();
+    });
     FavoriteDb.favoriteSongs;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
       appBar: AppBar(
         title: const Text('Recently played'),
         actions: [
           IconButton(
             onPressed: () {
-              setState(() {
-                isGrid = !isGrid;
-              });
+              // setState(() {
+              //   isGrid = !isGrid;
+              // });
             },
             icon: isGrid
                 ? const Icon(
@@ -53,21 +57,27 @@ class _RecentPageState extends State<RecentPage> {
                     color: Colors.black,
                   ),
           ),
-        const  SizedBox(width: 10,)
+          const SizedBox(
+            width: 10,
+          )
         ],
       ),
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: FutureBuilder(
-          future: GetRecentSongController.getRecentSongs(),
-          builder: (context, items) {
-            return ValueListenableBuilder(
-              valueListenable: GetRecentSongController.recentSongNotifier,
-              builder: (context, List<SongModel> value, Widget? child) {
+        child: Consumer<GetRecentSongController>(
+          builder: (context, recent, child) {
+            return FutureBuilder(
+              future: recent.getRecentSongs(),
+              builder: (context, items) {
+               final value= recent.recentSongNotifier;
+                //  recent.getRecentSongs();
                 if (value.isEmpty) {
-                  return  Center(
-                    child: Text('No Recent Songs',style: title,),
+                  return Center(
+                    child: Text(
+                      'No Recent Songs',
+                      style: title,
+                    ),
                   );
                 } else {
                   final temp = value.reversed.toList();
@@ -94,8 +104,18 @@ class _RecentPageState extends State<RecentPage> {
                         );
                       }
                       return !isGrid
-                          ? ListViewScreen(songModel: recentSong,isRecent: true,recentLength: recentSong.length >8 ? 8:recentSong.length,)
-                          : GridViewScreen(songModel: recentSong,isRecent: true,recentLength: recentSong.length >8 ? 8:recentSong.length,);
+                          ? ListViewScreen(
+                              songModel: recentSong,
+                              isRecent: true,
+                              recentLength:
+                                  recentSong.length > 8 ? 8 : recentSong.length,
+                            )
+                          : GridViewScreen(
+                              songModel: recentSong,
+                              isRecent: true,
+                              recentLength:
+                                  recentSong.length > 8 ? 8 : recentSong.length,
+                            );
                     },
                   );
                 }

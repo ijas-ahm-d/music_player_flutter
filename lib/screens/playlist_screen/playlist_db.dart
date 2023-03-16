@@ -1,39 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:music_app/database/musica_db.dart';
+// import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/favorite_screen/favorite_db.dart';
 import 'package:music_app/screens/splash_screen/splash.dart';
 
-class PlaylistDb extends ChangeNotifier {
+import '../../model/musica_db.dart';
+
+class PlaylistDb with ChangeNotifier {
+  // final List<MusicaModel> _playlistNotifier = [];
+  // List<MusicaModel> get playlistNotifier => _playlistNotifier;
   static ValueNotifier<List<MusicaModel>> playlistNotifier = ValueNotifier([]);
   static final playlistDb = Hive.box<MusicaModel>('playlistDb');
 
-  static Future<void> addPlaylist(MusicaModel value) async {
+ static Future<void> addPlaylist(MusicaModel value) async {
     final playlistDb = Hive.box<MusicaModel>('playlistDb');
     await playlistDb.add(value);
     playlistNotifier.value.add(value);
+    getAllPlaylist();
   }
 
-  static Future<void> getAllPlaylist() async {
+ static Future<void> getAllPlaylist() async {
     final playlistDb = Hive.box<MusicaModel>('playlistDb');
     playlistNotifier.value.clear();
     playlistNotifier.value.addAll(playlistDb.values);
-    playlistNotifier.notifyListeners();
+   playlistNotifier. notifyListeners();
   }
 
-  static Future<void> deletePlaylist(int index) async {
+  Future<void> deletePlaylist(int index) async {
     final playlistDb = Hive.box<MusicaModel>('playlistDb');
     await playlistDb.deleteAt(index);
     getAllPlaylist();
   }
 
-  static Future<void> editPlaylist(int index, MusicaModel value) async {
+ static Future<void> editPlaylist(int index, MusicaModel value) async {
     final playlistDb = Hive.box<MusicaModel>('playlistDb');
     await playlistDb.putAt(index, value);
     getAllPlaylist();
   }
 
-  static Future<void> resetAPP(context) async {
+static  Future<void> resetAPP(context) async {
     final playListDb = Hive.box<MusicaModel>('playlistDb');
     final musicDb = Hive.box<int>('FavoriteDB');
     final recentDb = Hive.box('recentSongNotifier');
@@ -48,6 +53,4 @@ class PlaylistDb extends ChangeNotifier {
         ),
         (route) => false);
   }
-
-  
 }

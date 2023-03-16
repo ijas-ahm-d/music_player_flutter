@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart ';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:music_app/controllers/get_recent_song_controller.dart';
+import 'package:music_app/model/musica_db.dart';
 import 'package:provider/provider.dart';
-import 'package:music_app/provider/song_model_provider.dart';
-import 'database/musica_db.dart';
+import 'package:music_app/controllers/song_model_provider.dart';
+// import 'database/musica_db.dart';
 import 'package:music_app/screens/splash_screen/splash.dart';
 
 Future<void> main() async {
@@ -27,9 +29,18 @@ Future<void> main() async {
   );
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => SongModelProvider(),
-      child: const MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => SongModelProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GetRecentSongController(),
+        ),
+      ],
+      builder: (context, child) {
+        return const MyApp();
+      },
     ),
   );
 }
@@ -56,6 +67,7 @@ class MyApp extends StatelessWidget {
           elevation: 1,
         ),
       ),
+      // home:const MyWidget() ,
       home: const SplashPage(),
     );
   }

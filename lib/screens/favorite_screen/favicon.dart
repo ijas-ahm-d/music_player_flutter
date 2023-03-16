@@ -69,7 +69,7 @@ class _FavIconState extends State<FavIcon> {
                 )
               : const Icon(
                   Icons.favorite_outline,
-                  color: Colors.white,
+                  color: Colors.grey,
                 ),
         );
       },

@@ -3,17 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music_app/screens/main_Screen/main_page.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
-}
-
-class _SplashPageState extends State<SplashPage> {
-  @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     Timer(
       const Duration(seconds: 3),
       () => Navigator.pushReplacement(
@@ -23,10 +17,7 @@ class _SplashPageState extends State<SplashPage> {
         ),
       ),
     );
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -47,16 +38,21 @@ class _SplashPageState extends State<SplashPage> {
                 Text(
                   'MuSiCa',
                   style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 40,
-                      color: Colors.purple[400],
-                      letterSpacing: 10),
+                    fontWeight: FontWeight.w900,
+                    fontSize: 40,
+                    color: Colors.purple[400],
+                    letterSpacing: 10,
+                  ),
                 ),
-                const Text('Let the Musica Speak!'),
+                const Text(
+                  'Let the Musica Speak!',
+                ),
                 const SizedBox(
                   height: 50,
                 ),
-                Lottie.asset('assets/lottie/splashlottie.json'),
+                Lottie.asset(
+                  'assets/lottie/splashlottie.json',
+                ),
               ],
             ),
           ),
