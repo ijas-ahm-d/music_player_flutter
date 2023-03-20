@@ -12,7 +12,7 @@ class SearchScreen extends StatefulWidget {
 
 List<SongModel> allsongs = [];
 List<SongModel> foundSongs = [];
-final audioQuery = OnAudioQuery();
+final _audioQuery = OnAudioQuery();
 
 @override
 class _SearchScreenState extends State<SearchScreen> {
@@ -52,7 +52,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void songsLoading() async {
-    allsongs = await audioQuery.querySongs(
+    allsongs = await _audioQuery.querySongs(
       sortType: null,
       orderType: OrderType.ASC_OR_SMALLER,
       uriType: UriType.EXTERNAL,

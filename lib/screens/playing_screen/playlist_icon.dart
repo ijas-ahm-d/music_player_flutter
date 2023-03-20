@@ -3,7 +3,7 @@ import 'package:hive_flutter/adapters.dart%20';
 // import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 
-import 'package:music_app/screens/playlist_screen/playlist_db.dart';
+import 'package:music_app/controllers/playlist_db.dart';
 import 'package:music_app/theme/button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 

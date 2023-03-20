@@ -1,14 +1,15 @@
+// import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:music_app/controllers/get_all_song_controller.dart';
+// import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/screens/home_screen/gridview_screen.dart';
 import 'package:music_app/screens/home_screen/listview_screen.dart';
-import 'package:music_app/screens/main_screen/main_page.dart';
 import 'package:music_app/screens/playing_screen/playing.dart';
 import 'package:music_app/screens/search_screen/search_page.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:music_app/screens/favorite_screen/favorite_db.dart';
+import 'package:music_app/controllers/favorite_db.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 TextStyle title = const TextStyle(
     color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16);
@@ -24,8 +25,7 @@ class HomePage extends StatefulWidget {
 List<SongModel> startSong = [];
 
 class _HomePageState extends State<HomePage> {
-  final OnAudioQuery audioQuery = OnAudioQuery();
-  final AudioPlayer audioPlayer = AudioPlayer();
+  final OnAudioQuery _audioQuery = OnAudioQuery();
   List<SongModel> allSongs = [];
 
   @override
@@ -35,9 +35,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void requestPermission() async {
-    bool permissionStatus = await audioQuery.permissionsStatus();
+    bool permissionStatus = await _audioQuery.permissionsStatus();
     if (!permissionStatus) {
-      await audioQuery.permissionsRequest();
+      await _audioQuery.permissionsRequest();
     }
     setState(() {});
     Permission.storage.request();
@@ -45,6 +45,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isGrid = Provider.of<FavoriteDb>(context).isGrid;
+    // final songProvider = Provider.of<FavoriteDb>(context, listen: false);
     return Scaffold(
       backgroundColor: isDark ? Colors.grey[900] : Colors.grey[300],
 
@@ -55,11 +57,12 @@ class _HomePageState extends State<HomePage> {
 // Grid Button
           IconButton(
             onPressed: () {
-              setState(
-                () {
-                  isGrid = !isGrid;
-                },
-              );
+              Provider.of<FavoriteDb>(context, listen: false).gridList();
+              // setState(
+              //   () {
+              //     isGrid = !isGrid;
+              //   },
+              // );
             },
             icon: isGrid
                 ? const Icon(Icons.format_list_bulleted)
@@ -84,42 +87,40 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
 //BODY
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: FutureBuilder<List<SongModel>>(
-          future: audioQuery.querySongs(
-            sortType: null,
-            orderType: OrderType.ASC_OR_SMALLER,
-            uriType: UriType.EXTERNAL,
-            ignoreCase: true,
-          ),
-          builder: (context, item) {
-            if (item.data == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (item.data!.isEmpty) {
-              return Center(
-                child: Text(
-                  'No songs found',
-                  style: title,
-                ),
-              );
-            }
-            startSong = item.data!;
-            if (!FavoriteDb.isInitialized) {
-              FavoriteDb.initialize(item.data!);
-            }
-            GetAllSongController.songscopy = item.data!;
-            return !isGrid
-// List view
-                ? ListViewScreen(songModel: item.data!)
-// Grid view
-                : GridViewScreen(songModel: item.data!);
-          },
+      body: FutureBuilder<List<SongModel>>(
+        future: _audioQuery.querySongs(
+          sortType: null,
+          orderType: OrderType.ASC_OR_SMALLER,
+          uriType: UriType.EXTERNAL,
+          ignoreCase: true,
         ),
+        builder: (context, item) {
+          if (item.data == null) {
+            return const Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+              ),
+            );
+          }
+
+          if (item.data!.isEmpty) {
+            return Center(
+              child: Text(
+                'No songs found',
+                style: title,
+              ),
+            );
+          }
+          
+          if (!Provider.of<FavoriteDb>(context, listen: false).isInitialized) {
+            Provider.of<FavoriteDb>(context, listen: false)
+                .initialize(item.data!);
+          }
+          return !isGrid
+          
+          ?ListViewScreen(songModel: item.data!)
+          : GridViewScreen(songModel: item.data!);
+        },
       ),
     );
   }

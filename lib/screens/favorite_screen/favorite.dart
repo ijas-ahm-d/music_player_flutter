@@ -1,38 +1,36 @@
+// import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:music_app/screens/favorite_screen/favorite_db.dart';
+import 'package:music_app/controllers/favorite_db.dart';
 import 'package:music_app/screens/home_screen/gridview_screen.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:music_app/screens/home_screen/listview_screen.dart';
-import 'package:music_app/screens/main_screen/main_page.dart';
+// import 'package:music_app/screens/main_screen/main_page.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:provider/provider.dart';
 
-class FavoritePage extends StatefulWidget {
+
+class FavoritePage extends StatelessWidget {
   const FavoritePage({super.key});
 
   @override
-  State<FavoritePage> createState() => _FavoritePageState();
-}
-
-class _FavoritePageState extends State<FavoritePage> {
-  @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: FavoriteDb.favoriteSongs,
-      builder: (BuildContext ctx, List<SongModel> favoriteData, Widget? child) {
+    final isGrid = Provider.of<FavoriteDb>(context).isGrid;
+    Provider.of<FavoriteDb>(context,listen: false).isInitialized;
+    List<SongModel> favList = [];
+    return Consumer<FavoriteDb>(
+      // valueListenable: FavoriteDb.favoriteSongs,
+      builder: (context, provider, child) {
         return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 // appbar
           appBar: AppBar(
             title: const Text('Favorite songs'),
             actions: [
               IconButton(
                 onPressed: () {
-                  setState(
-                    () {
-                      isGrid = !isGrid;
-                    },
-                  );
+                  Provider.of<FavoriteDb>(context, listen: false).gridList();
                 },
                 icon: isGrid
                     ? const Icon(
@@ -51,18 +49,27 @@ class _FavoritePageState extends State<FavoritePage> {
           ),
           body: SizedBox(
             width: double.infinity,
-            height: double.infinity,  
-            child: ValueListenableBuilder(
-              valueListenable: FavoriteDb.favoriteSongs,
-              builder: (BuildContext ctx, List<SongModel> favoriteData,
-                  Widget? child) {
+            height: double.infinity,
+            child: Consumer<FavoriteDb>(
+              // valueListenable: FavoriteDb.favoriteSongs,
+              builder: (context, songFavController, child) {
 //if there is no favorite songs
-                if (favoriteData.isEmpty) {
-                  return  Center(
+
+                final temp = songFavController.favoriteSongs.reversed.toList();
+                favList = temp.toSet().toList();
+                print(temp.length);
+                print(songFavController.favoriteSongs.length);
+                print(
+                    "========================================= ${favList.length}");
+                // print(object)
+
+                if (favList.isEmpty) {
+                  return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Lottie.asset('assets/lottie/FavIcon.json',width: 200,height: 200),
+                        Lottie.asset('assets/lottie/FavIcon.json',
+                            width: 200, height: 200),
                         Text(
                           'No Favorite Songs',
                           style: title,
@@ -71,12 +78,16 @@ class _FavoritePageState extends State<FavoritePage> {
                     ),
                   );
                 } else {
-                  final temp = favoriteData.reversed.toList();
-                  favoriteData = temp.toSet().toList();
+                  if (!isGrid) {
+                    return ListViewScreen(
+                        songModel: songFavController.favoriteSongs);
+                  } else {
+                    return GridViewScreen(songModel: favList);
+                  }
 
-                  return !isGrid
-                      ? ListViewScreen(songModel: favoriteData)
-                      : GridViewScreen(songModel: favoriteData);
+                  // !isGrid
+                  //     ? ListViewScreen(songModel: favList)
+                  //     : GridViewScreen(songModel: favList);
                 }
               },
             ),

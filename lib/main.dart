@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart ';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:music_app/controllers/favorite_db.dart';
 import 'package:music_app/controllers/get_recent_song_controller.dart';
 import 'package:music_app/model/musica_db.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,9 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => GetRecentSongController(),
+        ),
+         ChangeNotifierProvider(
+          create: (context) => FavoriteDb(),
         ),
       ],
       builder: (context, child) {

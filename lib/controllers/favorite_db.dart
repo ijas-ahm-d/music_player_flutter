@@ -2,34 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class FavoriteDb with ChangeNotifier {
-  static bool isInitialized = false;
+class FavoriteDb extends ChangeNotifier {
+  // static bool isGrid = false;
+   bool isInitialized = false;
   static final musicDb = Hive.box<int>('FavoriteDB');
-  // static List<SongModel> favoriteSongs = [];
-  static ValueNotifier<List<SongModel>> favoriteSongs = ValueNotifier([]);
-static  initialize(List<SongModel> songs) {
+   List<SongModel> favoriteSongs = [];
+  // static ValueNotifier<List<SongModel>> favoriteSongs = ValueNotifier([]);
+  initialize(List<SongModel> songs) {
     for (SongModel song in songs) {
       if (isFavor(song)) {
-        favoriteSongs.value.add(song);
+        favoriteSongs.add(song);
       }
     }
     isInitialized = true;
   }
 
- static isFavor(SongModel song) {
+  bool _isGrid = false;
+  bool get isGrid => _isGrid;
+
+  void gridList() {
+    _isGrid = !_isGrid;
+    notifyListeners();
+  }
+
+ bool isFavor(SongModel song) {
     if (musicDb.values.contains(song.id)) {
       return true;
     }
     return false;
   }
 
- static add(SongModel song) async {
-    musicDb.add(song.id);
-    favoriteSongs.value.add(song);
-    FavoriteDb.favoriteSongs.notifyListeners();
+  add(SongModel song) async {
+    await musicDb.add(song.id);
+    favoriteSongs.add(song);
+    notifyListeners();
   }
 
-static  delete(int id) async {
+  delete(int id) async {
     int deletekey = 0;
     if (!musicDb.values.contains(id)) {
       return;
@@ -41,13 +50,13 @@ static  delete(int id) async {
       }
     });
     musicDb.delete(deletekey);
-    favoriteSongs.value.removeWhere((song) => song.id == id);
-    // notifyListeners();
+    favoriteSongs.removeWhere((song) => song.id == id);
+    notifyListeners();
   }
 
   clear() async {
     // FavoriteDb.favoriteSongs.clear();
-    favoriteSongs.value.clear();
+    favoriteSongs.clear();
     musicDb.clear();
     notifyListeners();
   }

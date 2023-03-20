@@ -9,7 +9,6 @@ import 'package:music_app/screens/playlist_screen/playlist.dart';
 import 'package:music_app/screens/settings_screen/settings.dart';
 // import 'package:music_app/screens/favorite_screen/favorite_db.dart';
 
-bool isGrid = false;
 
 class MainPage extends StatelessWidget {
  const  MainPage({super.key});

@@ -3,7 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
 // import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/home_screen/home.dart';
-import 'package:music_app/screens/playlist_screen/playlist_db.dart';
+import 'package:music_app/controllers/playlist_db.dart';
 import 'package:music_app/screens/playlist_screen/playlist_gridview.dart';
 
 import '../../model/musica_db.dart';
@@ -216,16 +216,17 @@ Future<void> saveButtonPressed(context) async {
   }
 }
 
-void snackBarShow(context, message) {
+void snackBarShow(context, message,) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
       ),
       width: MediaQuery.of(context).size.width * 3.5 / 5,
+// width: 100,
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.black,
-      margin: const EdgeInsets.all(10),
+      // margin: const EdgeInsets.all(10),
       duration: const Duration(milliseconds: 750),
       content: Text(
         message,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
-import 'package:music_app/screens/playlist_screen/playlist_db.dart';
+import 'package:music_app/controllers/playlist_db.dart';
 import 'package:music_app/screens/settings_screen/privacy_and_policy.dart';
 import 'package:music_app/screens/settings_screen/share_app.dart';
 import 'package:music_app/screens/settings_screen/terms_and_condition.dart';

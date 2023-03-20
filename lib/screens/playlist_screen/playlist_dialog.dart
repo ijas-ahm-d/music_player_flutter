@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/playlist_screen/playlist.dart';
-import 'package:music_app/screens/playlist_screen/playlist_db.dart';
+import 'package:music_app/controllers/playlist_db.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/musica_db.dart';

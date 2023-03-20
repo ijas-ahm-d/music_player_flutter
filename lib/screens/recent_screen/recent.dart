@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/controllers/get_recent_song_controller.dart';
-import 'package:music_app/screens/favorite_screen/favorite_db.dart';
+import 'package:music_app/controllers/favorite_db.dart';
 import 'package:music_app/screens/home_screen/gridview_screen.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:music_app/screens/home_screen/listview_screen.dart';
@@ -31,11 +31,13 @@ class _RecentPageState extends State<RecentPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final isGrid = Provider.of<FavoriteDb>(context).isGrid;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<GetRecentSongController>(context, listen: false)
           .getRecentSongs();
     });
-    FavoriteDb.favoriteSongs;
+    // FavoriteDb.favoriteSongs;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -46,6 +48,8 @@ class _RecentPageState extends State<RecentPage> {
               // setState(() {
               //   isGrid = !isGrid;
               // });
+              Provider.of<FavoriteDb>(context,listen: false).gridList();
+
             },
             icon: isGrid
                 ? const Icon(
