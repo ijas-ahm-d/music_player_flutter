@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 part 'musica_db.g.dart';
+
 @HiveType(typeId: 1)
 class MusicaModel extends HiveObject {
   MusicaModel({required this.name, required this.songId});
@@ -13,6 +14,7 @@ class MusicaModel extends HiveObject {
   add(int id) async {
     songId.add(id);
     save();
+    print(songId.length);
   }
 
   deleteData(int id) {

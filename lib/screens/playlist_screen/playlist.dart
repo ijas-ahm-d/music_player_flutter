@@ -3,29 +3,19 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
 // import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/home_screen/home.dart';
-import 'package:music_app/controllers/playlist_db.dart';
+import 'package:music_app/controllers/playlist/playlist_db.dart';
 import 'package:music_app/screens/playlist_screen/playlist_gridview.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/musica_db.dart';
 
-class PlaylistPage extends StatefulWidget {
+class PlaylistPage extends StatelessWidget {
   const PlaylistPage({super.key});
 
-  @override
-  State<PlaylistPage> createState() => _PlaylistPageState();
-}
-
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-TextEditingController nameController = TextEditingController();
-
-class _PlaylistPageState extends State<PlaylistPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  // @override
   @override
   Widget build(BuildContext context) {
+    Provider.of<PlaylistDb>(context).getAllPlaylist();
     return ValueListenableBuilder(
       valueListenable: Hive.box<MusicaModel>('playlistDb').listenable(),
       builder: (context, Box<MusicaModel> musicList, child) {
@@ -153,6 +143,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     saveButtonPressed(context);
+                    
                   }
                 },
                 child: const Text(
@@ -170,6 +161,9 @@ class _PlaylistPageState extends State<PlaylistPage> {
     );
   }
 }
+
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+TextEditingController nameController = TextEditingController();
 
 // Save Button Pressed
 Future<void> saveButtonPressed(context) async {
@@ -195,7 +189,9 @@ Future<void> saveButtonPressed(context) async {
     ScaffoldMessenger.of(context).showSnackBar(snackbar3);
     Navigator.of(context).pop();
   } else {
-    PlaylistDb.addPlaylist(music);
+    Provider.of<PlaylistDb>(context, listen: false).addPlaylist(music);
+
+    // PlaylistDb.addPlaylist(music);
     snackBarShow(context, "'playlist created successfully',");
     // final snackbar4 = SnackBar(
     //     shape: RoundedRectangleBorder(
@@ -216,7 +212,10 @@ Future<void> saveButtonPressed(context) async {
   }
 }
 
-void snackBarShow(context, message,) {
+void snackBarShow(
+  context,
+  message,
+) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       shape: RoundedRectangleBorder(

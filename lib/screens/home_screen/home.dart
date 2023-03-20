@@ -1,6 +1,9 @@
 // import 'dart:developer';
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:music_app/controllers/get_all_song_controller.dart';
 // import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/screens/home_screen/gridview_screen.dart';
 import 'package:music_app/screens/home_screen/listview_screen.dart';
@@ -45,7 +48,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isGrid = Provider.of<FavoriteDb>(context).isGrid;
+    print("kdkd===================k");
+    final isGrid = Provider.of<FavoriteDb>(context, listen: false).isGrid;
     // final songProvider = Provider.of<FavoriteDb>(context, listen: false);
     return Scaffold(
       backgroundColor: isDark ? Colors.grey[900] : Colors.grey[300],
@@ -111,15 +115,16 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           }
-          
+
           if (!Provider.of<FavoriteDb>(context, listen: false).isInitialized) {
             Provider.of<FavoriteDb>(context, listen: false)
                 .initialize(item.data!);
           }
+          GetAllSongController.songscopy = item.data!;
+
           return !isGrid
-          
-          ?ListViewScreen(songModel: item.data!)
-          : GridViewScreen(songModel: item.data!);
+              ? ListViewScreen(songModel: item.data!)
+              : GridViewScreen(songModel: item.data!);
         },
       ),
     );

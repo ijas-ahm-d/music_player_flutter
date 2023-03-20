@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:music_app/database/musica_db.dart';
-import 'package:music_app/screens/playlist_screen/playlist.dart';
-import 'package:music_app/controllers/playlist_db.dart';
+import 'package:music_app/controllers/playlist/playlist_db.dart';
 import 'package:provider/provider.dart';
-
 import '../../model/musica_db.dart';
 
 Future moredialogplaylist(
@@ -204,7 +201,6 @@ Future editplaylist(index, context, formkey, playlistnamectrl) {
             ),
             SimpleDialogOption(
               onPressed: () {
-                
                 updateplaylistname(index, formkey, playlistnamectrl, context);
 
                 Navigator.of(context).pop();
@@ -237,7 +233,7 @@ void updateplaylistname(index, formkey, playlistnamectrl, context) {
       // if (datas.contains(playlistname.name)) {
       //   snackBarShow(context, "playlist already exist");
       //   Navigator.pop(context);
-      
+
       // }
 //       Consumer<PlaylistDb>(
 //         builder: (context, value, child) {
@@ -245,7 +241,11 @@ void updateplaylistname(index, formkey, playlistnamectrl, context) {
 //           return value.editPlaylist(index, playlistname);
 //         },
       // );
-      PlaylistDb.editPlaylist(index, playlistname);
+
+      Provider.of<PlaylistDb>(context, listen: false)
+          .editPlaylist(index, playlistname);
+
+      // PlaylistDb.editPlaylist(index, playlistname);
     }
   }
 }

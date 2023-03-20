@@ -57,10 +57,6 @@ class FavoritePage extends StatelessWidget {
 
                 final temp = songFavController.favoriteSongs.reversed.toList();
                 favList = temp.toSet().toList();
-                print(temp.length);
-                print(songFavController.favoriteSongs.length);
-                print(
-                    "========================================= ${favList.length}");
                 // print(object)
 
                 if (favList.isEmpty) {

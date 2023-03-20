@@ -3,9 +3,10 @@ import 'package:hive_flutter/adapters.dart%20';
 // import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 
-import 'package:music_app/controllers/playlist_db.dart';
+import 'package:music_app/controllers/playlist/playlist_db.dart';
 import 'package:music_app/theme/button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/musica_db.dart';
 
@@ -258,7 +259,15 @@ class _PlaylistIconState extends State<PlaylistIcon> {
       ScaffoldMessenger.of(context).showSnackBar(snackbar3);
       Navigator.of(context).pop();
     } else {
-      PlaylistDb.addPlaylist(music);
+      // Consumer<PlaylistDb>(
+      //   builder: (context, value, child) {
+      //     return value.addPlaylist(music);
+      //   },
+      // );
+
+      Provider.of<PlaylistDb>(context, listen: false).addPlaylist(music);
+
+      // PlaylistDb.addPlaylist(music);
       final snackbar4 = SnackBar(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),

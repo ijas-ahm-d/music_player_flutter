@@ -1,42 +1,68 @@
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class GetRecentSongController with ChangeNotifier {
-  // static final recentDb = Hive.openBox('recentSongNotifier');
-  final List<SongModel> _recentSongNotifier = [];
-  List<SongModel> get recentSongNotifier => _recentSongNotifier;
-
+class GetRecentSongController extends ChangeNotifier{
+ List<SongModel> recentSongNotifier = [];
   static List<dynamic> recentlyPlayed = [];
+  static final recentDb =  Hive.box('recentSongNotifier');
 
-  Future<void> addRecentlyPlayed(item) async {
-    final recentDb = await Hive.openBox('recentSongNotifier');
+   Future<void> addRecentlyPlayed(item) async {
     await recentDb.add(item);
     getRecentSongs();
     notifyListeners();
   }
 
-  Future<void> getRecentSongs() async {
-    final recentDb = await Hive.openBox('recentSongNotifier');
+   Future<void> getRecentSongs() async {
     recentlyPlayed = recentDb.values.toList();
     displayRecents();
-    notifyListeners();
+    // notifyListeners();
   }
 
-  Future<void> displayRecents() async {
-    final recentDb = await Hive.openBox('recentSongNotifier');
+   Future<void> displayRecents() async {
     final recentSongItems = recentDb.values.toList();
-    _recentSongNotifier.clear();
-    // recentSongNotifier.clear();
+    recentSongNotifier.clear();
     recentlyPlayed.clear();
     for (int i = 0; i < recentSongItems.length; i++) {
       for (int j = 0; j < startSong.length; j++) {
         if (recentSongItems[i] == startSong[j].id) {
-          _recentSongNotifier.add(startSong[j]);
+          recentSongNotifier.add(startSong[j]);
           recentlyPlayed.add(startSong[j]);
         }
       }
     }
   }
 }
+
+// class GetRecentSongController with ChangeNotifier {
+//   List<SongModel> recentSongNotifier = [];
+//   static List<dynamic> recentlyPlayed = [];
+//   static final recentDb = Hive.box('recentSongNotifier');
+
+//   Future<void> addRecentlyPlayed(item) async {
+//     await recentDb.add(item);
+//     getRecentSongs();
+//     notifyListeners();
+//   }
+
+//   Future<void> getRecentSongs() async {
+//     recentlyPlayed = recentDb.values.toList();
+//     displayRecents();
+//   }
+
+//   Future<void> displayRecents() async {
+//     final recentSongItems = recentDb.values.toList();
+//     // recentSongNotifier.clear();
+//     recentlyPlayed.clear();
+//     for (int i = 0; i < recentSongItems.length; i++) {
+//       for (int j = 0; j < startSong.length; j++) {
+//         if (recentSongItems[i] == startSong[j].id) {
+//           recentSongNotifier.add(startSong[j]);
+//           recentlyPlayed.add(startSong[j]);
+//         }
+//       }
+//     }
+//   }
+// }

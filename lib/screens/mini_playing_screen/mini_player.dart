@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:music_app/screens/playing_screen/playing.dart';
+import 'package:provider/provider.dart';
 import 'package:text_scroll/text_scroll.dart';
 import '../../controllers/get_recent_song_controller.dart';
 import '../../theme/button.dart';
@@ -195,6 +196,9 @@ class _MiniPlayerState extends State<MiniPlayer> {
                       IconButton(
                         iconSize: 35,
                         onPressed: () async {
+                           Provider.of<GetRecentSongController>(context,listen: false).addRecentlyPlayed(GetAllSongController
+                                      .playingSong[GetAllSongController
+                                          .audioPlayer.currentIndex!].id);
                           // GetRecentSongController.addRecentlyPlayed(
                           //     GetAllSongController
                           //         .playingSong[GetAllSongController
@@ -202,6 +206,7 @@ class _MiniPlayerState extends State<MiniPlayer> {
                           //         .id);
                           if (GetAllSongController.audioPlayer.hasNext) {
                             await GetAllSongController.audioPlayer.seekToNext();
+                           
                             await GetAllSongController.audioPlayer.play();
                           } else {
                             await GetAllSongController.audioPlayer.play();

@@ -10,7 +10,7 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 
 class ListViewScreen extends StatelessWidget {
-   ListViewScreen(
+  ListViewScreen(
       {super.key,
       required this.songModel,
       this.recentLength,
@@ -18,7 +18,7 @@ class ListViewScreen extends StatelessWidget {
   final List<SongModel> songModel;
   final dynamic recentLength;
   final bool isRecent;
- final List<SongModel> allSongs = [];
+  final List<SongModel> allSongs = [];
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +100,7 @@ class ListViewScreen extends StatelessWidget {
           ),
         );
       },
-      itemCount:
-          isRecent ? recentLength : songModel.length,
+      itemCount: isRecent ? recentLength : songModel.length,
     );
   }
 }
