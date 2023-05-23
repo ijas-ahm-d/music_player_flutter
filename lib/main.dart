@@ -12,6 +12,8 @@ import 'package:music_app/controllers/song_model_provider.dart';
 // import 'database/musica_db.dart';
 import 'package:music_app/screens/splash_screen/splash.dart';
 
+import 'controllers/nowPlaying/nowplaying_controller.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (!Hive.isAdapterRegistered(MusicaModelAdapter().typeId)) {
@@ -49,6 +51,12 @@ Future<void> main() async {
         ),
            ChangeNotifierProvider(
           create: (context) => MusicPlaylistController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => NowPlayingController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => NowPlayingPageController(),
         ),
       ],
       builder: (context, child) {

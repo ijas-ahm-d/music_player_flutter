@@ -4,7 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/controllers/song_model_provider.dart';
 import 'package:music_app/screens/home_screen/home.dart';
-import 'package:music_app/screens/home_screen/listview_screen.dart';
 import 'package:music_app/screens/playing_screen/playing.dart';
 import 'package:music_app/screens/playlist_screen/playlist_addsongs.dart';
 import 'package:music_app/theme/button.dart';
@@ -236,8 +235,7 @@ class SinglePlaylist extends StatelessWidget {
         }
       }
     }
-    print(GetAllSongController.songscopy.length);
-    print("============================${plsongs.length}");
+   
     return plsongs;
   }
 }

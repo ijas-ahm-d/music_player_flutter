@@ -3,11 +3,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class FavoriteDb extends ChangeNotifier {
-  // static bool isGrid = false;
+  
    bool isInitialized = false;
   static final musicDb = Hive.box<int>('FavoriteDB');
    List<SongModel> favoriteSongs = [];
-  // static ValueNotifier<List<SongModel>> favoriteSongs = ValueNotifier([]);
+
   initialize(List<SongModel> songs) {
     for (SongModel song in songs) {
       if (isFavor(song)) {

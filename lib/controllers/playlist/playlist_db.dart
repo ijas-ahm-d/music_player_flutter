@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:music_app/controllers/favorite_db.dart';
+import 'package:music_app/controllers/song_model_provider.dart';
 import 'package:music_app/screens/splash_screen/splash.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/musica_db.dart';
+// import '../get_all_song_controller.dart';
 
 class PlaylistDb with ChangeNotifier {
   final List<MusicaModel> _playlistNotifier = [];
@@ -40,9 +42,12 @@ class PlaylistDb with ChangeNotifier {
     final playListDb = Hive.box<MusicaModel>('playlistDb');
     final musicDb = Hive.box<int>('FavoriteDB');
     final recentDb = Hive.box('recentSongNotifier');
+
     await musicDb.clear();
     await playListDb.clear();
     await recentDb.clear();
+    Provider.of<SongModelProvider>(context, listen: false).disposeIndex();
+    Provider.of<SongModelProvider>(context, listen: false).disposeMiniScreen();
 
     Provider.of<FavoriteDb>(context, listen: false).clear();
     // FavoriteDb.favoriteSongs.clear();

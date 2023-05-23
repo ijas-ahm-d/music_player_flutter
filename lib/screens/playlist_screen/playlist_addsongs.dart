@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_app/controllers/playlist/playlist_controller.dart';
 // import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/home_screen/home.dart';
-import 'package:music_app/controllers/playlist/playlist_db.dart';
+// import 'package:music_app/controllers/playlist/playlist_db.dart';
 import 'package:music_app/theme/button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
@@ -139,41 +139,4 @@ class _PlaylistAddSongState extends State<PlaylistAddSong> {
     );
   }
 
-  // void songAddToPlaylist(SongModel data) {
-  //   widget.playlist.add(data.id);
-  //   final addedToPlaylist = SnackBar(
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(25),
-  //     ),
-  //     width: MediaQuery.of(context).size.width * 3.5 / 5,
-  //     behavior: SnackBarBehavior.floating,
-  //     backgroundColor: Colors.black,
-  //     content: const Text(
-  //       'Song added to playlist',
-  //       textAlign: TextAlign.center,
-  //       style: TextStyle(color: Colors.white),
-  //     ),
-  //     duration: const Duration(milliseconds: 550),
-  //   );
-  //   ScaffoldMessenger.of(context).showSnackBar(addedToPlaylist);
-  // }
-
-  // void songDeleteFromPlaylist(SongModel data) {
-  //   widget.playlist.deleteData(data.id);
-  //   final removePlaylist = SnackBar(
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(25),
-  //     ),
-  //     width: MediaQuery.of(context).size.width * 3.5 / 5,
-  //     behavior: SnackBarBehavior.floating,
-  //     backgroundColor: Colors.black,
-  //     content: const Text(
-  //       'Song removed from Playlist',
-  //       textAlign: TextAlign.center,
-  //       style: TextStyle(color: Colors.white),
-  //     ),
-  //     duration: const Duration(milliseconds: 550),
-  //   );
-  //   ScaffoldMessenger.of(context).showSnackBar(removePlaylist);
-  // }
 }

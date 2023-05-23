@@ -14,7 +14,7 @@ class MusicaModel extends HiveObject {
   add(int id) async {
     songId.add(id);
     save();
-    print(songId.length);
+    
   }
 
   deleteData(int id) {

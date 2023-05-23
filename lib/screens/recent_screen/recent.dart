@@ -121,7 +121,7 @@ class RecentPage extends StatelessWidget {
                 if (recentSong.isEmpty) {
                   return Center(
                     child: Text(
-                      recentSong.length.toString(),
+                      "No recent song found",
                       style: title,
                     ),
                   );

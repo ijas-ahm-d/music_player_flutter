@@ -1,13 +1,7 @@
-// import 'dart:developer';
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
-// import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/screens/home_screen/gridview_screen.dart';
 import 'package:music_app/screens/home_screen/listview_screen.dart';
-import 'package:music_app/screens/playing_screen/playing.dart';
 import 'package:music_app/screens/search_screen/search_page.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:music_app/controllers/favorite_db.dart';
@@ -48,11 +42,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("kdkd===================k");
-    final isGrid = Provider.of<FavoriteDb>(context, listen: false).isGrid;
-    // final songProvider = Provider.of<FavoriteDb>(context, listen: false);
+    final isGrid = Provider.of<FavoriteDb>(context).isGrid;
     return Scaffold(
-      backgroundColor: isDark ? Colors.grey[900] : Colors.grey[300],
+      backgroundColor: Colors.grey[300],
 
 //APPBAR
       appBar: AppBar(
@@ -62,11 +54,6 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: () {
               Provider.of<FavoriteDb>(context, listen: false).gridList();
-              // setState(
-              //   () {
-              //     isGrid = !isGrid;
-              //   },
-              // );
             },
             icon: isGrid
                 ? const Icon(Icons.format_list_bulleted)
@@ -121,6 +108,7 @@ class _HomePageState extends State<HomePage> {
                 .initialize(item.data!);
           }
           GetAllSongController.songscopy = item.data!;
+          startSong = item.data!;
 
           return !isGrid
               ? ListViewScreen(songModel: item.data!)

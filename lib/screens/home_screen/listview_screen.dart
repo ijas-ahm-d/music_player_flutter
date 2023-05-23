@@ -72,17 +72,19 @@ class ListViewScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   // ontap to playing screen
                   onTap: () {
+                    GetAllSongController.audioPlayer.play();
                     GetAllSongController.audioPlayer.setAudioSource(
                         GetAllSongController.createSongList(songModel),
                         initialIndex: index);
                     recentSong.addRecentlyPlayed(songModel[index].id);
-                    // GetRecentSongController.addRecentlyPlayed(
-                    //     widget.songModel[index].id);
                     context
                         .read<SongModelProvider>()
                         .setid(songModel[index].id);
+                    Provider.of<SongModelProvider>(context, listen: false)
+                        .showMiniScreen();
 
                     Navigator.push(
                       context,

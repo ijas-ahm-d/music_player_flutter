@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:music_app/controllers/get_all_song_controller.dart';
+import 'package:music_app/controllers/nowPlaying/nowplaying_controller.dart';
 import 'package:music_app/screens/favorite_screen/favicon.dart';
 import 'package:music_app/screens/playing_screen/player_widgets.dart';
 import 'package:music_app/theme/button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:provider/provider.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 class NowPlaying extends StatefulWidget {
@@ -19,41 +20,23 @@ class NowPlaying extends StatefulWidget {
   State<NowPlaying> createState() => _NowPlayingState();
 }
 
-bool isDark = false;
-
 class _NowPlayingState extends State<NowPlaying> {
-  Duration _duration = const Duration();
-  Duration _position = const Duration();
-  int currentIndex = 0;
-  bool firstSong = false;
-  bool lastSong = false;
-  int large = 0;
 
-  @override
-  void initState() {
-    GetAllSongController.audioPlayer.currentIndexStream.listen(
-      (index) {
-        if (index != null) {
-          GetAllSongController.currentIndexes = index;
-          if (mounted) {
-            setState(
-              () {
-                large = widget.count - 1;
-                currentIndex = index;
-                index == 0 ? firstSong = true : firstSong = false;
-                index == large ? lastSong = true : lastSong = false;
-              },
-            );
-          }
-        }
-      },
-    );
-    super.initState();
-    playSong();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<NowPlayingPageController>(context, listen: false)
+          .initState(widget.count);
+    });
+    final nowPlayingController = context.watch<NowPlayingPageController>();
+    final currentIndex = nowPlayingController.cuttentIndex;
+    final duration = nowPlayingController.duration;
+    final position = nowPlayingController.position;
+    final firstSong = nowPlayingController.firstSong;
+    final lastSong = nowPlayingController.lastSong;
+
     return Scaffold(
       backgroundColor: isDark ? Colors.grey[900] : Colors.grey[300],
       body: SafeArea(
@@ -189,17 +172,10 @@ class _NowPlayingState extends State<NowPlaying> {
                     inactiveColor: Colors.black26,
                     activeColor: Colors.black,
                     min: const Duration(microseconds: 0).inSeconds.toDouble(),
-                    max: _duration.inSeconds.toDouble(),
-                    value: _position.inSeconds.toDouble(),
+                    max: duration.inSeconds.toDouble(),
+                    value: position.inSeconds.toDouble(),
                     onChanged: (value) {
-                      if (mounted) {
-                        setState(
-                          () {
-                            changeToSeconds(value.toInt());
-                            value = value;
-                          },
-                        );
-                      }
+                      Provider.of<NowPlayingController>(context,listen: false).changeSlider(value);
                     },
                   ),
                 ),
@@ -212,12 +188,12 @@ class _NowPlayingState extends State<NowPlaying> {
                   children: [
 //STARTING TIME
                     Text(
-                      _formatDuration(_position),
+                      nowPlayingController.formatPosition,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
 // ENDING TIME
                     Text(
-                      _formatDuration(_duration),
+                      nowPlayingController.formatDuration,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
                   ],
@@ -227,7 +203,7 @@ class _NowPlayingState extends State<NowPlaying> {
                 height: 20,
               ),
               PlayingControls(
-                favSongModel: widget.songModel[currentIndex],
+                songModel: widget.songModel[currentIndex],
                 firstsong: firstSong,
                 lastsong: lastSong,
                 count: widget.count,
@@ -239,48 +215,8 @@ class _NowPlayingState extends State<NowPlaying> {
     );
   }
 
-  playSong() {
-    GetAllSongController.audioPlayer.play();
-
-    GetAllSongController.audioPlayer.durationStream.listen(
-      (d) {
-        if (mounted) {
-          setState(
-            () {
-              if (d != null) {
-                _duration = d;
-              }
-            },
-          );
-        }
-      },
-    );
-    GetAllSongController.audioPlayer.positionStream.listen(
-      (p) {
-        if (mounted) {
-          setState(
-            () {
-              _position = p;
-            },
-          );
-        }
-      },
-    );
-  }
-
-  String _formatDuration(Duration? duration) {
-    if (duration == null) {
-      return '--:--';
-    } else {
-      String minutes = duration.inMinutes.toString().padLeft(2, '0');
-      String seconds =
-          duration.inSeconds.remainder(60).toString().padLeft(2, '0');
-      return '$minutes:$seconds';
-    }
-  }
-
-  void changeToSeconds(int seconds) {
-    Duration duration = Duration(seconds: seconds);
-    GetAllSongController.audioPlayer.seek(duration);
-  }
+  // void changeToSeconds(int seconds) {
+  //   Duration duration = Duration(seconds: seconds);
+  //   GetAllSongController.audioPlayer.seek(duration);
+  // }
 }

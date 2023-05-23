@@ -61,165 +61,183 @@ class _MiniPlayerState extends State<MiniPlayer> {
               border: Border.all(color: Colors.purple, width: 3),
               childIcon: Stack(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        width: MediaQuery.of(context).size.width * 1.5 / 4,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            StreamBuilder<bool>(
-                              stream: GetAllSongController
-                                  .audioPlayer.playingStream,
-                              builder: (context, snapshot) {
-                                bool? playingStage = snapshot.data;
-                                if (playingStage != null && playingStage) {
-                                  return TextScroll(
-                                    GetAllSongController
-                                        .playingSong[GetAllSongController
-                                            .audioPlayer.currentIndex!]
-                                        .displayNameWOExt,
-                                    textAlign: TextAlign.center,
-                                    style: title,
-                                    velocity: const Velocity(
-                                        pixelsPerSecond: Offset(40, 0)),
-                                  );
-                                } else {
-                                  return Text(
-                                    GetAllSongController
-                                        .playingSong[GetAllSongController
-                                            .audioPlayer.currentIndex!]
-                                        .displayNameWOExt,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        overflow: TextOverflow.ellipsis,
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  );
-                                }
-                              },
-                            ),
-                            TextScroll(
-                              GetAllSongController
+                  Consumer<GetRecentSongController>(
+                      builder: (context, recentSong, child) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(left: 10),
+                          width: MediaQuery.of(context).size.width * 1.5 / 4,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              StreamBuilder<bool>(
+                                stream: GetAllSongController
+                                    .audioPlayer.playingStream,
+                                builder: (context, snapshot) {
+                                  bool? playingStage = snapshot.data;
+                                  if (playingStage != null && playingStage) {
+                                    return TextScroll(
+                                      GetAllSongController
                                           .playingSong[GetAllSongController
                                               .audioPlayer.currentIndex!]
-                                          .artist
-                                          .toString() ==
-                                      "<unknown>"
-                                  ? "Unknown Artist"
-                                  : GetAllSongController
-                                      .playingSong[GetAllSongController
-                                          .audioPlayer.currentIndex!]
-                                      .artist
-                                      .toString(),
-                              style: const TextStyle(
-                                  fontFamily: 'poppins',
-                                  fontSize: 10,
-                                  color: Colors.black),
-                              mode: TextScrollMode.endless,
-                            ),
-                          ],
-                        ),
-                      ),
-// recent
-                      firstSong
-                          ? IconButton(
-                              iconSize: 32,
-                              onPressed: null,
-                              icon: Icon(
-                                Icons.skip_previous,
-                                color: Colors.grey.withOpacity(0.4),
+                                          .displayNameWOExt,
+                                      textAlign: TextAlign.center,
+                                      style: title,
+                                      velocity: const Velocity(
+                                          pixelsPerSecond: Offset(40, 0)),
+                                    );
+                                  } else {
+                                    return Text(
+                                      GetAllSongController
+                                          .playingSong[GetAllSongController
+                                              .audioPlayer.currentIndex!]
+                                          .displayNameWOExt,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          overflow: TextOverflow.ellipsis,
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    );
+                                  }
+                                },
                               ),
-                            )
-                          : IconButton(
-                              iconSize: 32,
-                              onPressed: () async {
-                                // GetRecentSongController.addRecentlyPlayed(
-                                //     GetAllSongController
-                                //         .playingSong[GetAllSongController
-                                //             .audioPlayer.currentIndex!]
-                                //         .id);
-                                if (GetAllSongController
-                                    .audioPlayer.hasPrevious) {
-                                  await GetAllSongController.audioPlayer
-                                      .seekToPrevious();
-                                  await GetAllSongController.audioPlayer.play();
-                                } else {
-                                  await GetAllSongController.audioPlayer.play();
-                                }
-                              },
-                              icon: const Icon(Icons.skip_previous),
-                              color: Colors.purple.withOpacity(0.7),
-                            ),
-// play and Pause
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white.withOpacity(0.8),
-                            shape: const CircleBorder()),
-                        onPressed: () async {
-                          setState(() {
-                            isPlaying = !isPlaying;
-                          });
-                          if (GetAllSongController.audioPlayer.playing) {
-                            await GetAllSongController.audioPlayer.pause();
-                            setState(() {});
-                          } else {
-                            await GetAllSongController.audioPlayer.play();
-                            setState(() {});
-                          }
-                        },
-                        child: StreamBuilder<bool>(
-                          stream:
-                              GetAllSongController.audioPlayer.playingStream,
-                          builder: (context, snapshot) {
-                            bool? playingStage = snapshot.data;
-                            if (playingStage != null && playingStage) {
-                              return Icon(
-                                Icons.pause_circle,
+                              TextScroll(
+                                GetAllSongController
+                                            .playingSong[GetAllSongController
+                                                .audioPlayer.currentIndex!]
+                                            .artist
+                                            .toString() ==
+                                        "<unknown>"
+                                    ? "Unknown Artist"
+                                    : GetAllSongController
+                                        .playingSong[GetAllSongController
+                                            .audioPlayer.currentIndex!]
+                                        .artist
+                                        .toString(),
+                                style: const TextStyle(
+                                    fontFamily: 'poppins',
+                                    fontSize: 10,
+                                    color: Colors.black),
+                                mode: TextScrollMode.endless,
+                              ),
+                            ],
+                          ),
+                        ),
+                        // recent
+                        firstSong
+                            ? IconButton(
+                                iconSize: 32,
+                                onPressed: null,
+                                icon: Icon(
+                                  Icons.skip_previous,
+                                  color: Colors.grey.withOpacity(0.4),
+                                ),
+                              )
+                            : IconButton(
+                                iconSize: 32,
+                                onPressed: () async {
+                                  // GetRecentSongController.addRecentlyPlayed(
+                                  //     GetAllSongController
+                                  //         .playingSong[GetAllSongController
+                                  //             .audioPlayer.currentIndex!]
+                                  //         .id);
+
+                                  recentSong.addRecentlyPlayed(GetAllSongController.playingSong[GetAllSongController.audioPlayer.currentIndex!].id);
+
+                                  if (GetAllSongController
+                                      .audioPlayer.hasPrevious) {
+                                    await GetAllSongController.audioPlayer
+                                        .seekToPrevious();
+                                    await GetAllSongController.audioPlayer
+                                        .play();
+                                  } else {
+                                    await GetAllSongController.audioPlayer
+                                        .play();
+                                  }
+                                },
+                                icon: const Icon(Icons.skip_previous),
                                 color: Colors.purple.withOpacity(0.7),
-                                size: 35,
-                              );
+                              ),
+
+
+
+                        // play and Pause
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white.withOpacity(0.8),
+                              shape: const CircleBorder()),
+                          onPressed: () async {
+                         
+                            if (GetAllSongController.audioPlayer.playing) {
+                              await GetAllSongController.audioPlayer.pause();
                             } else {
-                              return Icon(
-                                Icons.play_circle,
-                                color: Colors.purple.withOpacity(0.7),
-                                size: 35,
-                              );
+                              await GetAllSongController.audioPlayer.play();
                             }
                           },
+                          child: StreamBuilder<bool>(
+                            stream:
+                                GetAllSongController.audioPlayer.playingStream,
+                            builder: (context, snapshot) {
+                              bool? playingStage = snapshot.data;
+                              if (playingStage != null && playingStage) {
+                                return Icon(
+                                  Icons.pause_circle,
+                                  color: Colors.purple.withOpacity(0.7),
+                                  size: 35,
+                                );
+                              } else {
+                                return Icon(
+                                  Icons.play_circle,
+                                  color: Colors.purple.withOpacity(0.7),
+                                  size: 35,
+                                );
+                              }
+                            },
+                          ),
                         ),
-                      ),
-// next
-                      IconButton(
-                        iconSize: 35,
-                        onPressed: () async {
-                           Provider.of<GetRecentSongController>(context,listen: false).addRecentlyPlayed(GetAllSongController
-                                      .playingSong[GetAllSongController
-                                          .audioPlayer.currentIndex!].id);
-                          // GetRecentSongController.addRecentlyPlayed(
-                          //     GetAllSongController
-                          //         .playingSong[GetAllSongController
-                          //             .audioPlayer.currentIndex!]
-                          //         .id);
-                          if (GetAllSongController.audioPlayer.hasNext) {
-                            await GetAllSongController.audioPlayer.seekToNext();
-                           
-                            await GetAllSongController.audioPlayer.play();
-                          } else {
-                            await GetAllSongController.audioPlayer.play();
-                          }
-                        },
-                        icon: const Icon(
-                          Icons.skip_next,
-                          size: 32,
-                        ),
-                        color: Colors.purple.withOpacity(0.7),
-                      )
-                    ],
-                  )
+
+
+
+
+
+
+                        
+                        // next
+                        IconButton(
+                          iconSize: 35,
+                          onPressed: () async {
+                            Provider.of<GetRecentSongController>(context,
+                                    listen: false)
+                                .addRecentlyPlayed(GetAllSongController
+                                    .playingSong[GetAllSongController
+                                        .audioPlayer.currentIndex!]
+                                    .id);
+                            // GetRecentSongController.addRecentlyPlayed(
+                            //     GetAllSongController
+                            //         .playingSong[GetAllSongController
+                            //             .audioPlayer.currentIndex!]
+                            //         .id);
+                            if (GetAllSongController.audioPlayer.hasNext) {
+                              await GetAllSongController.audioPlayer
+                                  .seekToNext();
+
+                              await GetAllSongController.audioPlayer.play();
+                            } else {
+                              await GetAllSongController.audioPlayer.play();
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.skip_next,
+                            size: 32,
+                          ),
+                          color: Colors.purple.withOpacity(0.7),
+                        )
+                      ],
+                    );
+                  })
                 ],
               ),
             ),

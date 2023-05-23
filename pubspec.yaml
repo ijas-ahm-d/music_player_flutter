@@ -41,7 +41,6 @@ dependencies:
   on_audio_query: ^2.6.1
   permission_handler: ^10.2.0
   provider: ^6.0.5
-  share_plus: ^6.3.0
   text_scroll: ^0.1.2
 
 dev_dependencies:

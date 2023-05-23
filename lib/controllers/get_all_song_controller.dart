@@ -19,7 +19,7 @@ class GetAllSongController {
             album: element.album ?? "No Album",
             title: element.title,
             artist: element.artist,
-            artUri: Uri.parse(element.id.toString()),
+            // artUri: Uri.parse(element.albumId.toString()),
           ),
         ),
       );

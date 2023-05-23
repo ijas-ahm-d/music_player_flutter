@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
+import 'package:music_app/controllers/get_recent_song_controller.dart';
 import 'package:music_app/screens/playing_screen/playlist_icon.dart';
+import 'package:music_app/screens/playing_screen/widgets/song_playpause.dart';
 import 'package:music_app/theme/button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:provider/provider.dart';
 
-class PlayingControls extends StatefulWidget {
-  const PlayingControls({
+import '../../controllers/nowPlaying/nowplaying_controller.dart';
+
+// ignore: must_be_immutable
+class PlayingControls extends StatelessWidget {
+  
+   PlayingControls({
     super.key,
-    required this.favSongModel,
+    required this.songModel,
     required this.firstsong,
     required this.lastsong,
     required this.count,
@@ -16,18 +23,18 @@ class PlayingControls extends StatefulWidget {
   final int count;
   final bool firstsong;
   final bool lastsong;
-  final SongModel favSongModel;
+  final SongModel songModel;
 
-  @override
-  State<PlayingControls> createState() => _PlayingControlsState();
-}
-
-class _PlayingControlsState extends State<PlayingControls> {
   bool isPlaying = true;
+
   bool isShuffling = false;
 
   @override
   Widget build(BuildContext context) {
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<NowPlayingPageController>(context, listen: false)
+          .initState(count);
+    });
     return Column(
       children: [
         Row(
@@ -90,7 +97,7 @@ class _PlayingControlsState extends State<PlayingControls> {
               ),
             ),
 // Playlist
-            PlaylistIcon(favsongModels: widget.favSongModel),
+            PlaylistIcon(favsongModels: songModel),
           ],
         ),
         const SizedBox(
@@ -106,7 +113,7 @@ class _PlayingControlsState extends State<PlayingControls> {
                   child: SpecialButton(
                     childIcon:
 // Previous songs
-                        widget.firstsong
+                        firstsong
                             ? IconButton(
                                 iconSize: 40,
                                 onPressed: null,
@@ -115,53 +122,128 @@ class _PlayingControlsState extends State<PlayingControls> {
                                   color: Colors.grey.withOpacity(0.4),
                                 ),
                               )
-                            : IconButton(
-                                iconSize: 40,
-                                onPressed: () {
-                                  if (GetAllSongController
-                                      .audioPlayer.hasPrevious) {
-                                    GetAllSongController.audioPlayer
-                                        .seekToPrevious();
-                                  }
+                            : Consumer<GetRecentSongController>(
+                                builder: (context, recentSong, child) {
+                                  return IconButton(
+                                    iconSize: 40,
+                                    onPressed: () {
+                                      if (GetAllSongController
+                                          .audioPlayer.hasPrevious) {
+                                        recentSong.addRecentlyPlayed(
+                                            GetAllSongController
+                                                .playingSong[
+                                                    GetAllSongController
+                                                        .audioPlayer
+                                                        .currentIndex!]
+                                                .id);
+                                        GetAllSongController.audioPlayer
+                                            .seekToPrevious();
+                                      }
+                                    },
+                                    icon: const Icon(
+                                      Icons.skip_previous,
+                                    ),
+                                  );
                                 },
-                                icon: const Icon(
-                                  Icons.skip_previous,
-                                ),
                               ),
                   ),
                 ),
                 Expanded(
+
                   flex: 2,
-                  child: SpecialButton(
-                    childIcon:
-// play pause
-                        IconButton(
-                      onPressed: () {
-                        if (mounted) {
-                          setState(
-                            () {
-                              if (GetAllSongController.audioPlayer.playing) {
-                                GetAllSongController.audioPlayer.pause();
-                              } else {
-                                GetAllSongController.audioPlayer.play();
-                              }
-                              isPlaying = !isPlaying;
-                            },
-                          );
-                        }
-                      },
-                      icon: isPlaying
-                          ? const Icon(Icons.pause)
-                          : const Icon(Icons.play_arrow),
-                      iconSize: 30,
-                    ),
-                  ),
+                  child:SpecialButton(childIcon:
+                   SongPauseButton(songModel: songModel, iconPlay:  const Icon(
+                  Icons.play_arrow,
+                  color: Colors.black,
+                  size: 35,
+                ), iconPause:  const Icon(
+                  Icons.pause,
+                  color: Colors.black,
+                  size: 35,
+                ),)
+                
+                
+                )
+                  
+                  // ElevatedButton(
+                  //         style: ElevatedButton.styleFrom(
+                  //             backgroundColor: Colors.white.withOpacity(0.8),
+                  //             shape: const CircleBorder()),
+                  //         onPressed: () async {
+                         
+                  //           if (GetAllSongController.audioPlayer.playing) {
+                  //             await GetAllSongController.audioPlayer.pause();
+                  //           } else {
+                  //             await GetAllSongController.audioPlayer.play();
+                  //           }
+                  //         },
+                  //         child: StreamBuilder<bool>(
+                  //           stream:
+                  //               GetAllSongController.audioPlayer.playingStream,
+                  //           builder: (context, snapshot) {
+                  //             bool? playingStage = snapshot.data;
+                  //             if (playingStage != null && playingStage) {
+                  //               return Icon(
+                  //                 Icons.pause_circle,
+                  //                 color: Colors.purple.withOpacity(0.7),
+                  //                 size: 35,
+                  //               );
+                  //             } else {
+                  //               return Icon(
+                  //                 Icons.play_circle,
+                  //                 color: Colors.purple.withOpacity(0.7),
+                  //                 size: 35,
+                  //               );
+                  //             }
+                  //           },
+                  //         ),
+                  //       ),
+//                   child: SpecialButton(
+//                     childIcon:
+// // play pause
+// IconButton (onPressed: (){
+//     if (GetAllSongController.audioPlayer.playing) {
+//                           GetAllSongController.audioPlayer.pause();
+//                         } else {
+//                           GetAllSongController.audioPlayer.play();
+//                         }
+                      
+// },
+// icon:,)
+
+
+
+
+
+                    //     GestureDetector(
+                    //   onTap: () {
+                    //     if (GetAllSongController.audioPlayer.playing) {
+                    //       GetAllSongController.audioPlayer.pause();
+                    //     } else {
+                    //       GetAllSongController.audioPlayer.play();
+                    //     }
+                    //   },
+                    //   child: StreamBuilder<bool>(
+                    //     stream: GetAllSongController.audioPlayer.playingStream,
+                    //     builder: (context, snapshot) {
+                    //       bool? playingStage = snapshot.data;
+                    //       if (playingStage != null && playingStage) {
+                    //         return Icon(Icons.pause);
+                    //       } else {
+                    //         return Icon(Icons.play_arrow);
+                    //       }
+                    //     },
+                    //   ),
+                    // ),
+
+
+                  // ),
                 ),
                 Expanded(
                   child: SpecialButton(
                     childIcon:
 // skip to next
-                        widget.lastsong
+                        lastsong
                             ? IconButton(
                                 iconSize: 40,
                                 onPressed: null,
@@ -170,18 +252,42 @@ class _PlayingControlsState extends State<PlayingControls> {
                                   color: Colors.grey.withOpacity(0.4),
                                 ),
                               )
-                            : IconButton(
-                                iconSize: 40,
-                                onPressed: () {
-                                  if (GetAllSongController
-                                      .audioPlayer.hasNext) {
-                                    GetAllSongController.audioPlayer
-                                        .seekToNext();
-                                  }
+                            // : IconButton(
+                            //     iconSize: 40,
+                            //     onPressed: () {
+                            //       if (GetAllSongController
+                            //           .audioPlayer.hasNext) {
+                            //         GetAllSongController.audioPlayer
+                            //             .seekToNext();
+                            //       }
+                            //     },
+                            //     icon: const Icon(
+                            //       Icons.skip_next,
+                            //     ),
+                            //   ),
+                            : Consumer<GetRecentSongController>(
+                                builder: (context, recentSong, child) {
+                                  return IconButton(
+                                    iconSize: 40,
+                                    onPressed: () {
+                                      if (GetAllSongController
+                                          .audioPlayer.hasNext) {
+                                        recentSong.addRecentlyPlayed(
+                                            GetAllSongController
+                                                .playingSong[
+                                                    GetAllSongController
+                                                        .audioPlayer
+                                                        .currentIndex!]
+                                                .id);
+                                        GetAllSongController.audioPlayer
+                                            .seekToNext();
+                                      }
+                                    },
+                                    icon: const Icon(
+                                      Icons.skip_next,
+                                    ),
+                                  );
                                 },
-                                icon: const Icon(
-                                  Icons.skip_next,
-                                ),
                               ),
                   ),
                 ),
