@@ -48,8 +48,8 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   if (GetAllSongController.audioPlayer.currentIndex != null &&
                       currentIndex != 4)
-                    Column(
-                      children: const [MiniPlayer()],
+                   const Column(
+                      children:  [MiniPlayer()],
                     )
                   else
                     const SizedBox()

@@ -12,13 +12,13 @@ class TermsAndConditionPage extends StatelessWidget {
         title: const Text('Terms of use',style: TextStyle(fontSize: 16),),
         
       ),
-      body: SingleChildScrollView(
+      body:const SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding:  EdgeInsets.all(30.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children:  [
               Text(
                 'Last updated: 2023-02-03\n',
                 style: TextStyle(fontStyle: FontStyle.italic),

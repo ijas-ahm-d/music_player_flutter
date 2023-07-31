@@ -13,11 +13,11 @@ class PrivacyPolicyPage extends StatelessWidget {
           style: TextStyle(fontSize: 17),
         ),
       ),
-      body: SingleChildScrollView(
+      body:const SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding:  EdgeInsets.all(15.0),
         child: Column(
-          children: const [
+          children:  [
             Text("""
 Privacy Policy for Musica player
 

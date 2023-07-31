@@ -19,8 +19,8 @@ Future moredialogplaylist(
             playlistnamectrl.clear();
             editplaylist(index, context, formkey, playlistnamectrl);
           },
-          child: Row(
-            children: const [
+          child:const Row(
+            children:  [
               Icon(
                 Icons.edit,
                 color: Colors.grey,
@@ -44,8 +44,8 @@ Future moredialogplaylist(
             Navigator.of(context).pop();
             showdialog(context, musicList, index);
           },
-          child: Row(
-            children: const [
+          child:const Row(
+            children:  [
               Icon(
                 Icons.delete,
                 color: Colors.grey,
