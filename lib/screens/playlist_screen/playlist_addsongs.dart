@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/controllers/playlist/playlist_controller.dart';
-// import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/home_screen/home.dart';
-// import 'package:music_app/controllers/playlist/playlist_db.dart';
-import 'package:music_app/theme/button.dart';
+import 'package:music_app/utils/special_button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
-
 import '../../model/musica_db.dart';
 
 class PlaylistAddSong extends StatefulWidget {
@@ -92,15 +89,7 @@ class _PlaylistAddSongState extends State<PlaylistAddSong> {
                                           songModel: widget.playlist,
                                           data: item.data![index],
                                           context: context);
-                                      // setState(
-                                      //   () {
-                                      //     songAddToPlaylist(
-                                      //       item.data![index],
-                                      //     );
-                                      //     PlaylistDb.playlistNotifier
-                                      //         .notifyListeners();
-                                      //   },
-                                      // );
+                                   
                                     },
                                     icon: Icon(
                                       Icons.add,
@@ -112,12 +101,7 @@ class _PlaylistAddSongState extends State<PlaylistAddSong> {
                                       playlistProvider.removeSongsFromPlaylist(
                                           songModel: widget.playlist,
                                           data: item.data![index], context: context);
-                                           // setState(
-                                      //   () {
-                                      //     songDeleteFromPlaylist(
-                                      //         item.data![index]);
-                                      //   },
-                                      // );
+                                      
                                     },
                                     icon: Icon(
                                       Icons.remove,

@@ -2,17 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart ';
 import 'package:just_audio_background/just_audio_background.dart';
-import 'package:music_app/controllers/favorite_db.dart';
-import 'package:music_app/controllers/get_recent_song_controller.dart';
-import 'package:music_app/controllers/playlist/playlist_controller.dart';
-import 'package:music_app/controllers/playlist/playlist_db.dart';
 import 'package:music_app/model/musica_db.dart';
+import 'package:music_app/utils/providers/provider_list.dart';
 import 'package:provider/provider.dart';
-import 'package:music_app/controllers/song_model_provider.dart';
-// import 'database/musica_db.dart';
 import 'package:music_app/screens/splash_screen/splash.dart';
 
-import 'controllers/nowPlaying/nowplaying_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,30 +29,7 @@ Future<void> main() async {
 
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => SongModelProvider(),
-        ),
-        
-         ChangeNotifierProvider(
-          create: (context) => FavoriteDb(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => GetRecentSongController(),
-        ),
-           ChangeNotifierProvider(
-          create: (context) => PlaylistDb(),
-        ),
-           ChangeNotifierProvider(
-          create: (context) => MusicPlaylistController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => NowPlayingController(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => NowPlayingPageController(),
-        ),
-      ],
+      providers: ProviderList.provider,
       builder: (context, child) {
         return const MyApp();
       },
@@ -88,7 +59,6 @@ class MyApp extends StatelessWidget {
           elevation: 1,
         ),
       ),
-      // home:const MyWidget() ,
       home: const SplashPage(),
     );
   }

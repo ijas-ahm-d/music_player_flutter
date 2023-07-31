@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_app/controllers/nowPlaying/nowplaying_controller.dart';
 import 'package:music_app/screens/favorite_screen/favicon.dart';
 import 'package:music_app/screens/playing_screen/player_widgets.dart';
-import 'package:music_app/theme/button.dart';
+import 'package:music_app/utils/special_button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 import 'package:text_scroll/text_scroll.dart';
@@ -215,8 +215,4 @@ class _NowPlayingState extends State<NowPlaying> {
     );
   }
 
-  // void changeToSeconds(int seconds) {
-  //   Duration duration = Duration(seconds: seconds);
-  //   GetAllSongController.audioPlayer.seek(duration);
-  // }
 }

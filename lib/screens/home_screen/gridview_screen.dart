@@ -3,7 +3,7 @@ import 'package:music_app/controllers/get_recent_song_controller.dart';
 import 'package:music_app/screens/favorite_screen/favicon.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:music_app/screens/playing_screen/playing.dart';
-import 'package:music_app/theme/button.dart';
+import 'package:music_app/utils/special_button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/get_all_song_controller.dart';

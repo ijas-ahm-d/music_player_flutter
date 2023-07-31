@@ -4,7 +4,7 @@ import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/controllers/get_recent_song_controller.dart';
 import 'package:music_app/screens/playing_screen/playlist_icon.dart';
 import 'package:music_app/screens/playing_screen/widgets/song_playpause.dart';
-import 'package:music_app/theme/button.dart';
+import 'package:music_app/utils/special_button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 
@@ -165,79 +165,6 @@ class PlayingControls extends StatelessWidget {
                 
                 )
                   
-                  // ElevatedButton(
-                  //         style: ElevatedButton.styleFrom(
-                  //             backgroundColor: Colors.white.withOpacity(0.8),
-                  //             shape: const CircleBorder()),
-                  //         onPressed: () async {
-                         
-                  //           if (GetAllSongController.audioPlayer.playing) {
-                  //             await GetAllSongController.audioPlayer.pause();
-                  //           } else {
-                  //             await GetAllSongController.audioPlayer.play();
-                  //           }
-                  //         },
-                  //         child: StreamBuilder<bool>(
-                  //           stream:
-                  //               GetAllSongController.audioPlayer.playingStream,
-                  //           builder: (context, snapshot) {
-                  //             bool? playingStage = snapshot.data;
-                  //             if (playingStage != null && playingStage) {
-                  //               return Icon(
-                  //                 Icons.pause_circle,
-                  //                 color: Colors.purple.withOpacity(0.7),
-                  //                 size: 35,
-                  //               );
-                  //             } else {
-                  //               return Icon(
-                  //                 Icons.play_circle,
-                  //                 color: Colors.purple.withOpacity(0.7),
-                  //                 size: 35,
-                  //               );
-                  //             }
-                  //           },
-                  //         ),
-                  //       ),
-//                   child: SpecialButton(
-//                     childIcon:
-// // play pause
-// IconButton (onPressed: (){
-//     if (GetAllSongController.audioPlayer.playing) {
-//                           GetAllSongController.audioPlayer.pause();
-//                         } else {
-//                           GetAllSongController.audioPlayer.play();
-//                         }
-                      
-// },
-// icon:,)
-
-
-
-
-
-                    //     GestureDetector(
-                    //   onTap: () {
-                    //     if (GetAllSongController.audioPlayer.playing) {
-                    //       GetAllSongController.audioPlayer.pause();
-                    //     } else {
-                    //       GetAllSongController.audioPlayer.play();
-                    //     }
-                    //   },
-                    //   child: StreamBuilder<bool>(
-                    //     stream: GetAllSongController.audioPlayer.playingStream,
-                    //     builder: (context, snapshot) {
-                    //       bool? playingStage = snapshot.data;
-                    //       if (playingStage != null && playingStage) {
-                    //         return Icon(Icons.pause);
-                    //       } else {
-                    //         return Icon(Icons.play_arrow);
-                    //       }
-                    //     },
-                    //   ),
-                    // ),
-
-
-                  // ),
                 ),
                 Expanded(
                   child: SpecialButton(
@@ -252,19 +179,6 @@ class PlayingControls extends StatelessWidget {
                                   color: Colors.grey.withOpacity(0.4),
                                 ),
                               )
-                            // : IconButton(
-                            //     iconSize: 40,
-                            //     onPressed: () {
-                            //       if (GetAllSongController
-                            //           .audioPlayer.hasNext) {
-                            //         GetAllSongController.audioPlayer
-                            //             .seekToNext();
-                            //       }
-                            //     },
-                            //     icon: const Icon(
-                            //       Icons.skip_next,
-                            //     ),
-                            //   ),
                             : Consumer<GetRecentSongController>(
                                 builder: (context, recentSong, child) {
                                   return IconButton(

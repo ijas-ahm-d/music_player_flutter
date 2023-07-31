@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:music_app/screens/playing_screen/playing.dart';
+import 'package:music_app/utils/special_button.dart';
 import 'package:provider/provider.dart';
 import 'package:text_scroll/text_scroll.dart';
 import '../../controllers/get_recent_song_controller.dart';
-import '../../theme/button.dart';
 
 class MiniPlayer extends StatefulWidget {
   const MiniPlayer({

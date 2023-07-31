@@ -1,11 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-// import 'package:music_app/database/musica_db.dart';
 import 'package:music_app/screens/playlist_screen/playlist_dialog.dart';
 import 'package:music_app/screens/playlist_screen/playlist_list.dart';
-import 'package:music_app/theme/button.dart';
-
+import 'package:music_app/utils/special_button.dart';
 import '../../model/musica_db.dart';
 
 class PlaylistGridView extends StatefulWidget {
