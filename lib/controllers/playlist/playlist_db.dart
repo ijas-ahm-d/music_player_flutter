@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:music_app/controllers/favorite_db.dart';
 import 'package:music_app/controllers/song_model_provider.dart';
-import 'package:music_app/screens/splash_screen/splash.dart';
+import 'package:music_app/view/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import '../../model/musica_db.dart';
 
@@ -45,7 +45,7 @@ class PlaylistDb with ChangeNotifier {
     Provider.of<FavoriteDb>(context, listen: false).clear();
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (context) => const SplashPage(),
+          builder: (context) => const SplashScreen(),
         ),
         (route) => false);
   }

@@ -4,9 +4,9 @@ import 'package:hive_flutter/adapters.dart ';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:music_app/model/musica_db.dart';
 import 'package:music_app/utils/providers/provider_list.dart';
+import 'package:music_app/utils/routes/navigations.dart';
+import 'package:music_app/utils/theme_data.dart';
 import 'package:provider/provider.dart';
-import 'package:music_app/screens/splash_screen/splash.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,12 +28,7 @@ Future<void> main() async {
   );
 
   runApp(
-    MultiProvider(
-      providers: ProviderList.provider,
-      builder: (context, child) {
-        return const MyApp();
-      },
-    ),
+    const MyApp(),
   );
 }
 
@@ -43,23 +38,16 @@ class MyApp extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Musica App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          iconTheme: IconThemeData(color: Colors.black),
-          toolbarHeight: 70,
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 27,
-            fontWeight: FontWeight.bold,
-          ),
-          backgroundColor: Colors.white,
-          elevation: 1,
-        ),
+    return MultiProvider(
+      providers: ProviderList.provider,
+      child: MaterialApp(
+        title: 'Musica App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeDatas().themeData(),
+        routes: Navigations.routes(),
+        initialRoute: Navigations.splashScreen,
+        navigatorKey: Navigations.navigatorKey,
       ),
-      home: const SplashPage(),
     );
   }
 }

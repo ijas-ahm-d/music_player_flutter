@@ -1,6 +1,6 @@
+import 'package:music_app/components/common_snack_bar.dart';
 import 'package:music_app/model/musica_db.dart';
 import 'package:flutter/material.dart';
-import 'package:music_app/screens/playlist_screen/playlist.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class MusicPlaylistController with ChangeNotifier {
@@ -11,7 +11,7 @@ class MusicPlaylistController with ChangeNotifier {
       required context}) {
     songModel.add(data.id);
     notifyListeners();
-    snackBarShow(context, "Song Added");
+     CommonSnackbar(). snackBarShow(context, "Song Added");
   }
 
   removeSongsFromPlaylist(
@@ -20,6 +20,6 @@ class MusicPlaylistController with ChangeNotifier {
       required context}) {
     songModel.deleteData(data.id);
     notifyListeners();
-    snackBarShow(context, "Song Removed");
+     CommonSnackbar(). snackBarShow(context, "Song Removed");
   }
 }

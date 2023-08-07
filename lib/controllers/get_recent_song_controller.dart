@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:music_app/screens/home_screen/home.dart';
+import 'package:music_app/view/home_screen/home.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class GetRecentSongController extends ChangeNotifier{
