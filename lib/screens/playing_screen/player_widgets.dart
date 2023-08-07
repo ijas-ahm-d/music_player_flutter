@@ -7,7 +7,6 @@ import 'package:music_app/screens/playing_screen/widgets/song_playpause.dart';
 import 'package:music_app/utils/special_button.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
-
 import '../../controllers/nowPlaying/nowplaying_controller.dart';
 
 // ignore: must_be_immutable

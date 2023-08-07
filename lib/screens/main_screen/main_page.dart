@@ -2,17 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/screens/mini_playing_screen/mini_player.dart';
 import 'package:music_app/screens/recent_screen/recent.dart';
-// import 'package:on_audio_query/on_audio_query.dart';
 import 'package:music_app/screens/favorite_screen/favorite.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:music_app/screens/playlist_screen/playlist.dart';
 import 'package:music_app/screens/settings_screen/settings.dart';
 import 'package:provider/provider.dart';
-
-// import '../../controllers/favorite_db.dart';
 import '../../controllers/song_model_provider.dart';
-
-// import 'package:music_app/screens/favorite_screen/favorite_db.dart';
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/screens/home_screen/gridview_screen.dart';
@@ -27,17 +29,82 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    requestPermission();
+    // requestPermission();
+
     super.initState();
   }
 
+// Future<bool> requestPermission(Permission permission) async {
+//   const storage = Permission.storage;
+//   const mediaAccess = Permission.accessMediaLocation;
+//   final deviceInfo = await DeviceInfoPlugin().androidInfo;
+
+//   try {
+//     log("in permission");
+//     if (await permission.isGranted) {
+//       log("11111111111111");
+//       await mediaAccess.isGranted && await storage.isGranted;
+//       return true;
+//     } else if (deviceInfo.version.sdkInt > 32) {
+//       bool permissionStatus = await Permission.audio.request().isGranted;
+//         setState(() {
+
+//   });
+//       return permissionStatus;
+//     } else {
+//       log("2222222222");
+//       var result = await storage.request();
+//       log("aaaaaaaaaaaaaaa");
+//       var mediaresult = await mediaAccess.request();
+//       log("0000000000000000000");
+//       if (result == PermissionStatus.granted &&
+//           mediaresult == PermissionStatus.granted) {
+//         log("33333333333");
+//          setState(() {
+
+//   });
+//         return true;
+//       } else {
+//         log("4444444444");
+//         return false;
+//       }
+
+//     }
+//   } catch (e) {
+//     log("Error: $e");
+//     return false;
+//   }
+
+// }
+
   void requestPermission() async {
-    bool permissionStatus = await _audioQuery.permissionsStatus();
-    if (!permissionStatus) {
-      await _audioQuery.permissionsRequest();
+    log("come to request permission");
+    final deviceInfo = await DeviceInfoPlugin().androidInfo;
+    try {
+      log("11111111");
+      bool permissionStatus = await _audioQuery.permissionsStatus();
+      log("222222222");
+      if (!permissionStatus) {
+        log("waiting....");
+        if (deviceInfo.version.sdkInt > 32) {
+          await Permission.audio.request();
+          log("111111111111111111");
+        } else {
+          log("000000000000000");
+          await _audioQuery.permissionsRequest();
+          log("222222222222222222");
+          Permission.storage.request();
+          log("3333333333333333333");
+        }
+      }
+      log("555555");
+      setState(() {});
+      Permission.storage.request();
+      log("66666");
+    } catch (e) {
+      log("666666");
+      log("Error $e");
     }
-    setState(() {});
-    Permission.storage.request();
   }
 
   @override
@@ -86,6 +153,7 @@ class _HomePageState extends State<HomePage> {
           ignoreCase: true,
         ),
         builder: (context, item) {
+         
           if (item.data == null) {
             return const Center(
               child: CircularProgressIndicator(

@@ -1,12 +1,9 @@
-// import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:music_app/controllers/favorite_db.dart';
 import 'package:music_app/screens/home_screen/gridview_screen.dart';
 import 'package:music_app/screens/home_screen/home.dart';
 import 'package:music_app/screens/home_screen/listview_screen.dart';
-// import 'package:music_app/screens/main_screen/main_page.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 
