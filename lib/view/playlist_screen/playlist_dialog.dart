@@ -227,25 +227,11 @@ void updateplaylistname(index, formkey, playlistnamectrl, context) {
       return;
     } else {
       final playlistname = MusicaModel(name: names, songId: []);
-      // final datas =
-      //     PlaylistDb.playlistDb.values.map((e) => e.name.trim()).toList();
-
-      // if (datas.contains(playlistname.name)) {
-      //   snackBarShow(context, "playlist already exist");
-      //   Navigator.pop(context);
-
-      // }
-//       Consumer<PlaylistDb>(
-//         builder: (context, value, child) {
-//  final playlistname = MusicaModel(name: names, songId: []);
-//           return value.editPlaylist(index, playlistname);
-//         },
-      // );
 
       Provider.of<PlaylistDb>(context, listen: false)
           .editPlaylist(index, playlistname);
 
-      // PlaylistDb.editPlaylist(index, playlistname);
+      
     }
   }
 }

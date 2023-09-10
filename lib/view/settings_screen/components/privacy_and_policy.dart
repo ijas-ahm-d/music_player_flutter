@@ -19,7 +19,7 @@ class PrivacyPolicyPage extends StatelessWidget {
         child: Column(
           children:  [
             Text("""
-Privacy Policy for Musica player
+Privacy Policy for AudioScape player
 
 Last updated: February 03, 2023
 
@@ -38,9 +38,9 @@ Account means a unique account created for You to access our Service or parts of
 
 Affiliate means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.
 
-Application refers to Musica player, the software program provided by the Company.
+Application refers to AudioScape player, the software program provided by the Company.
 
-Company (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Musica player.
+Company (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to AudioScape player.
 
 Country refers to: Kerala, India
 

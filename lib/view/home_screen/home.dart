@@ -5,6 +5,7 @@ import 'package:music_app/view/home_screen/components/listview_screen.dart';
 import 'package:music_app/utils/const/colors.dart';
 import 'package:music_app/utils/const/text_styles.dart';
 import 'package:music_app/utils/routes/navigations.dart';
+import 'package:music_app/view/settings_screen/settings.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:music_app/controllers/favorite_db.dart';
 import 'package:provider/provider.dart';
@@ -17,16 +18,27 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     final OnAudioQuery audioQuery = OnAudioQuery();
     final provider = context.watch<FavoriteDb>();
     return Scaffold(
-      backgroundColor: AppColors.grey300,
+      key: _scaffoldKey,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      drawer: const SettingsPage(),
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            _scaffoldKey.currentState!.openDrawer() ;
+          },
+          icon: const Icon(
+            Icons.settings_outlined,
+          ),
+        ),
         title: const Text('All songs'),
         actions: [
           IconButton(
             onPressed: () {
-             provider.gridList();
+              provider.gridList();
             },
             icon: provider.isGrid
                 ? const Icon(Icons.format_list_bulleted)

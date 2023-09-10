@@ -39,6 +39,8 @@ class ListViewScreen extends StatelessWidget {
                     artworkWidth: 50,
                     artworkHeight: 50,
                     keepOldArtwork: true,
+                                    artworkFit: BoxFit.cover,
+
                     artworkBorder: BorderRadius.circular(6),
                     nullArtworkWidget: Container(
                       decoration: BoxDecoration(

@@ -4,7 +4,7 @@
 //
 // Modifications to this file should be done in a copy under a different name
 // as this file may be regenerated.
-
+// import androidx.multidex.MultiDexApplication;
 package io.flutter.app;
 
 import android.app.Application;

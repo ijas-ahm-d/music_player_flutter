@@ -18,9 +18,9 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    requestPermission();
+    userPermission();
     Timer(
-      const Duration(seconds: 3),
+      const Duration(seconds: 5),
       () => Navigator.pushReplacementNamed(
         context,
         Navigations.mainPage,
@@ -28,36 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
     );
 
     super.initState();
-  }
-
-  Future<bool> requestPermission() async {
-    const storagePermission = Permission.storage;
-    const mediaAccess = Permission.accessMediaLocation;
-    final deviceInfo = await DeviceInfoPlugin().androidInfo;
-
-    try {
-      if (await storagePermission.isGranted) {
-        await mediaAccess.isGranted && await storagePermission.isGranted;
-        return true;
-      } else {
-        if (deviceInfo.version.sdkInt > 32) {
-          bool permissionStatus = await Permission.audio.request().isGranted;
-          return permissionStatus;
-        } else {
-          var result = await storagePermission.request();
-          var mediaresult = await mediaAccess.request();
-          if (result == PermissionStatus.granted &&
-              mediaresult == PermissionStatus.granted) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      }
-    } catch (e) {
-      log("Error: $e");
-      return false;
-    }
   }
 
   @override
@@ -80,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
                 Text(
-                  'MuSiCa',
+                  'AudioScape',
                   style: TextStyle(
                     fontSize: 40,
                     letterSpacing: 8,
@@ -89,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
                 const Text(
-                  'Let the Musica Speak!',
+                  'Elevate your music experience with AudioScape',
                 ),
                 const SizedBox(
                   height: 50,
@@ -103,5 +73,56 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+}
+
+Future<bool> requestPermission() async {
+  const storagePermission = Permission.storage;
+  final deviceInfo = await DeviceInfoPlugin().androidInfo;
+
+  try {
+    log("in permission");
+    if (await storagePermission.isGranted) {
+      log("11111111111111");
+      await storagePermission.isGranted;
+      return true;
+    } else if (deviceInfo.version.sdkInt > 32) {
+      log("Audio permission");
+      if (await Permission.audio.isGranted) {
+        log("audio video granted");
+        return true;
+      } else if (await Permission.audio.isPermanentlyDenied) {
+        log("here");
+        await openAppSettings();
+        return true;
+      }
+      log("helo");
+      await Permission.audio.request();
+
+      return true;
+    } else {
+      log("2222222222");
+      var result = await storagePermission.request();
+      log("aaaaaaaaaaaaaaa");
+
+      log("0000000000000000000");
+      if (result == PermissionStatus.granted) {
+        log("33333333333");
+        return true;
+      } else {
+        log("4444444444");
+        return false;
+      }
+    }
+  } catch (e) {
+    log("Error: $e");
+    return false;
+  }
+}
+
+Future userPermission() async {
+  bool permission = await requestPermission();
+  if (!permission) {
+    await openAppSettings();
   }
 }

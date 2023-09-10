@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: ProviderList.provider,
       child: MaterialApp(
-        title: 'Musica App',
+        title: 'AudioScape App',
         debugShowCheckedModeBanner: false,
         theme: ThemeDatas().themeData(),
         routes: Navigations.routes(),

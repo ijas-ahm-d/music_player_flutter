@@ -28,7 +28,7 @@ class TermsAndConditionPage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               Text("""
-      Welcome to Musica App,These Terms of Service govern your use of our website located at lala.com (together or individually “Service”) operated by Musica App.\n
+      Welcome to AudioScape App,These Terms of Service govern your use of our website located at lala.com (together or individually “Service”) operated by AudioScape App.\n
       Our Privacy Policy also governs your use of our Service and explains how we collect, safeguard and disclose information that results from your use of our web pages.Your agreement with us includes these Terms and our Privacy Policy (“Agreements”). You acknowledge that you have read and understood Agreements, and agree to be bound of them.If you do not agree with (or cannot comply with) Agreements, then you may not use the Service, but please let us know by emailing at ijasahammed2000@gmail.com so we can try to find a solution. These Terms apply to all visitors, users and others who wish to access or use Service.\n"""),
               Text(
                 '2. Communications\n',
@@ -172,8 +172,8 @@ class TermsAndConditionPage extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               Text(
-                  """           Our Service may contain links to third party web sites or services that are not owned or controlled by Musica App.
-Musica App has no control over, and assumes no responsibility for the content, privacy policies, or practices of any third party web sites or services. We do not warrant the offerings of any of these entities/individuals or their websites.
+                  """           Our Service may contain links to third party web sites or services that are not owned or controlled by AudioScape App.
+AudioScape App has no control over, and assumes no responsibility for the content, privacy policies, or practices of any third party web sites or services. We do not warrant the offerings of any of these entities/individuals or their websites.
   
 For example, the outlined Terms and Conditions generator/a is an easy-to-use free tool for creating an excellent standard Terms of Service template for a website, blog, e-commerce store or app.
       
