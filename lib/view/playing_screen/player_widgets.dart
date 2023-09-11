@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:just_audio/just_audio.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:music_app/controllers/get_all_song_controller.dart';
 import 'package:music_app/controllers/get_recent_song_controller.dart';
-// import 'package:music_app/view/playing_screen/playlist_icon.dart';
+import 'package:music_app/view/playing_screen/playlist_icon.dart';
 import 'package:music_app/view/playing_screen/widgets/song_playpause.dart';
 import 'package:music_app/components/special_button.dart';
-
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/nowPlaying/nowplaying_controller.dart';
@@ -34,72 +33,73 @@ class PlayingControls extends StatelessWidget {
       Provider.of<NowPlayingPageController>(context, listen: false)
           .initState(count);
     });
+
     return Column(
       children: [
-//         Row(
-//           // crossAxisAlignment: CrossAxisAlignment.center,
-//           mainAxisAlignment: MainAxisAlignment.spaceAround,
-//           children: [
-// // shuffle
-//             IconButton(
-//               onPressed: () {
-//                 isShuffling == false
-//                     ? GetAllSongController.audioPlayer
-//                         .setShuffleModeEnabled(true)
-//                     : GetAllSongController.audioPlayer
-//                         .setShuffleModeEnabled(false);
-//               },
-//               icon: StreamBuilder<bool>(
-//                 stream:
-//                     GetAllSongController.audioPlayer.shuffleModeEnabledStream,
-//                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-//                   if (snapshot.hasData) {
-//                     isShuffling = snapshot.data;
-//                   }
-//                   if (isShuffling) {
-//                     return Icon(
-//                       Icons.shuffle_rounded,
-//                       color: Colors.purple[300],
-//                     );
-//                   } else {
-//                     return const Icon(
-//                       Icons.shuffle_rounded,
-//                     );
-//                   }
-//                 },
-//               ),
-//             ),
+        Row(
+          
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+// shuffle
+            IconButton(
+              onPressed: () {
+                isShuffling == false
+                    ? GetAllSongController.audioPlayer
+                        .setShuffleModeEnabled(true)
+                    : GetAllSongController.audioPlayer
+                        .setShuffleModeEnabled(false);
+              },
+              icon: StreamBuilder<bool>(
+                stream:
+                    GetAllSongController.audioPlayer.shuffleModeEnabledStream,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    isShuffling = snapshot.data;
+                  }
+                  if (isShuffling) {
+                    return Icon(
+                      Icons.shuffle_rounded,
+                      color: Colors.purple[300],
+                    );
+                  } else {
+                    return const Icon(
+                      Icons.shuffle_rounded,
+                    );
+                  }
+                },
+              ),
+            ),
 
-// // repeat
-//             IconButton(
-//               onPressed: () {
-//                 GetAllSongController.audioPlayer.loopMode == LoopMode.one
-//                     ? GetAllSongController.audioPlayer.setLoopMode(LoopMode.all)
-//                     : GetAllSongController.audioPlayer
-//                         .setLoopMode(LoopMode.one);
-//               },
-//               icon: StreamBuilder<LoopMode>(
-//                 stream: GetAllSongController.audioPlayer.loopModeStream,
-//                 builder: (context, snapshot) {
-//                   final loopMode = snapshot.data;
-//                   if (LoopMode.one == loopMode) {
-//                     return Icon(
-//                       Icons.repeat_one,
-//                       color: Colors.purple[300],
-//                     );
-//                   } else {
-//                     return const Icon(
-//                       Icons.repeat,
-//                       color: Colors.black,
-//                     );
-//                   }
-//                 },
-//               ),
-//             ),
-// // Playlist
-//             PlaylistIcon(favsongModels: songModel),
-//           ],
-//         ),
+// repeat
+            IconButton(
+              onPressed: () {
+                GetAllSongController.audioPlayer.loopMode == LoopMode.one
+                    ? GetAllSongController.audioPlayer.setLoopMode(LoopMode.all)
+                    : GetAllSongController.audioPlayer
+                        .setLoopMode(LoopMode.one);
+              },
+              icon: StreamBuilder<LoopMode>(
+                stream: GetAllSongController.audioPlayer.loopModeStream,
+                builder: (context, snapshot) {
+                  final loopMode = snapshot.data;
+                  if (LoopMode.one == loopMode) {
+                    return Icon(
+                      Icons.repeat_one,
+                      color: Colors.purple[300],
+                    );
+                  } else {
+                    return const Icon(
+                      Icons.repeat,
+                      color: Colors.black,
+                    );
+                  }
+                },
+              ),
+            ),
+// Playlist
+            PlaylistIcon(favsongModels: songModel),
+          ],
+        ),
         const SizedBox(
           height: 15,
         ),
